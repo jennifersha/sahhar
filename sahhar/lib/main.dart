@@ -1,70 +1,100 @@
 import 'package:flutter/material.dart';
-import 'package:touchable_opacity/touchable_opacity.dart';
+import './LoginPage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MaterialApp(
+      home: HomePage(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SAHHAR SHOP',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Sahhar Shop'),
-          backgroundColor: Color.fromARGB(255, 144, 23, 15),
-        ),
-        // ignore: unnecessary_new
-        body: new Container(
-          // ignore: unnecessary_new
-          child: new Column(
-            children: [
-              // ignore: unnecessary_new
-              new Container(
-                height: 350.0,
-                width: 350.0,
-                // ignore: unnecessary_new
-                decoration: new BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(
-                          "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/af37a5e9dea07dc58baf6c738e5d0f60",
-                        ),
-                        fit: BoxFit.cover)),
-              ),
-              new Container(
-                child: new Text(
-                  'Home decor . Arts & Crafts store . Designs . Laser engraving and cutting on wood',
-                  textAlign: TextAlign.center,
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              height: 60,
+              decoration: BoxDecoration(
+                  color: Color(0xFF7E0000),
+                  border: Border.all(
+                    color: Color(0xFF7E0000),
+                  ),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20))),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 18, left: 10),
+                child: Text(
+                  'Sahhar Shop',
                   style: TextStyle(
-                      fontFamily: 'Aleo',
-                      fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Colors.black),
+                      color: Colors.white,
+                      fontSize: 20),
                 ),
               ),
-              new Container(
-                child: TouchableOpacity(
-                  activeOpacity: 0.2,
-                  child: Text(
-                    "Get Started",
-                    style: TextStyle(
-                      fontSize: 28,
-                      color: Colors.black,
+            ),
+            Expanded(
+              child: Container(
+                child: Image.asset(
+                  'assets/logo.png',
+                  width: double.infinity,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 60,
+            ),
+            Container(
+              child: Text(
+                'Home decor . Arts & Crafts store . Designs . Laser engraving and cutting on wood',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(
+              height: 100,
+            ),
+            Container(
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+                child: Container(
+                  width: 170,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'GET STARTED',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 100,
+            )
+          ],
         ),
       ),
     );
   }
-}      
-
-//child: Image.network(
- // 'https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/af37a5e9dea07dc58baf6c738e5d0f60'),
+}
