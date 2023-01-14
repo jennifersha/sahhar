@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
               child: Padding(
-                padding: const EdgeInsets.only(top: 18, left: 10),
+                padding: const EdgeInsets.only(top: 18, left: 11),
                 child: Text(
                   'Sahhar Shop',
                   style: TextStyle(
