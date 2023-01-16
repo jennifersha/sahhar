@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './AddCategory.dart';
-import './AddProduct.dart';
+//import './AddCategory.dart';
+//import './AddProduct.dart';
 
 class AdminDashboard extends StatelessWidget {
   @override
@@ -66,10 +66,11 @@ class AdminDashboard extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
+                        /* Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => AddProduct()),
-                        );
+                        ) ;
+                        */
                       },
                       child: Container(
                         height: 50,
@@ -107,11 +108,11 @@ class AdminDashboard extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
+                        /* Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => AddCategory()),
-                        );
+                        ); */
                       },
                       child: Container(
                         height: 50,
