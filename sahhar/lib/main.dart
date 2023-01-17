@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 80,
             ),
             Container(
               child: InkWell(
@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 120,
             )
           ],
         ),
