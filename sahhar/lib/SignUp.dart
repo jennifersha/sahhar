@@ -5,7 +5,6 @@ class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
-
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
@@ -27,59 +26,104 @@ class _SignUpState extends State<SignUp> {
                       topRight: Radius.circular(20))),
               child: Padding(
                 padding: const EdgeInsets.only(top: 18, left: 10),
-                child: Text(
-                  '← back',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 20),
-                ),
-              ),
-            ),
-            Container(
-              height: 200,
-              color: Color(0xFF7E0000),
-              child: Center(
-                child: Text(
-                  "Create Account",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '←  Back',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20),
                   ),
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(15),
+              height: 180,
+              color: Color(0xFF7E0000),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 66, left: 10),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Create",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Account",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              color: Color(0xFF7E0000),
+              child: Container(
+                  width: double.infinity,
+                  height: 35,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.white,
+                      ),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(35),
+                          topRight: Radius.circular(35)))),
+            ),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(10),
               child: Column(
                 children: <Widget>[
                   TextField(
                     decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.person,
+                        size: 25,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      icon: Icon(Icons.person),
                       labelText: "Name",
                     ),
                   ),
                   SizedBox(height: 20),
                   TextField(
                     decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.email,
+                        size: 25,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      icon: Icon(Icons.email),
                       labelText: "Email",
                     ),
                   ),
                   SizedBox(height: 20),
                   TextField(
                     decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        size: 25,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      icon: Icon(Icons.lock),
                       labelText: "Password",
                     ),
                     obscureText: true,
@@ -87,10 +131,13 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 20),
                   TextField(
                     decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        size: 25,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      icon: Icon(Icons.lock),
                       labelText: "Confirm Password",
                     ),
                     obscureText: true,
@@ -108,7 +155,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         child: Center(
                           child: Text(
-                            'LOGIN',
+                            'SIGN UP',
                             style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                         ),
