@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      '← back',
+                      '←  Back',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -64,15 +64,19 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                height: 200,
+                height: 180,
                 color: Color(0xFF7E0000),
-                child: Center(
-                  child: Text(
-                    "Welcome!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 20, left: 10),
+                    child: Text(
+                      "Welcome!",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -81,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                 color: Color(0xFF7E0000),
                 child: Container(
                     width: double.infinity,
-                    height: 50,
+                    height: 35,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
@@ -93,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 color: Colors.white,
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(10),
                 child: Column(
                   children: <Widget>[
                     TextField(
@@ -129,7 +133,6 @@ class _LoginPageState extends State<LoginPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        // icon: Icon(Icons.lock),
                         labelText: "Password",
                       ),
                       obscureText: true,
@@ -180,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
-                    SizedBox(height: 110),
+                    SizedBox(height: 60),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
