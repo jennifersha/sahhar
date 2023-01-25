@@ -10,7 +10,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  TextEditingController? txtuser;
+  TextEditingController? txtfirst;
+  TextEditingController? txtlast;
   TextEditingController? txtemail;
   TextEditingController? txtpass;
   TextEditingController? txtpassC;
@@ -20,7 +21,8 @@ class _SignUpState extends State<SignUp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    txtuser = new TextEditingController();
+    txtfirst = new TextEditingController();
+    txtlast = new TextEditingController();
     txtemail = new TextEditingController();
     txtpass = new TextEditingController();
     txtpassC = new TextEditingController();
@@ -110,7 +112,7 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 children: <Widget>[
                   TextField(
-                    controller: txtuser,
+                    controller: txtfirst,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.person,
@@ -119,7 +121,21 @@ class _SignUpState extends State<SignUp> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      labelText: "Name",
+                      labelText: "First Name",
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: txtlast,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.person,
+                        size: 25,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      labelText: "Last Name",
                     ),
                   ),
                   SizedBox(height: 20),
@@ -180,7 +196,8 @@ class _SignUpState extends State<SignUp> {
                               .collection("users")
                               .doc(auth.currentUser!.uid.toString())
                               .set({
-                            "name": txtuser!.text,
+                            "First name": txtfirst!.text,
+                            "Last name": txtlast!.text,
                             "email": txtemail!.text,
                             "pass": txtpass!.text,
                           });
