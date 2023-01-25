@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -5,7 +8,24 @@ class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
+
 class _SignUpState extends State<SignUp> {
+  TextEditingController? txtuser;
+  TextEditingController? txtemail;
+  TextEditingController? txtpass;
+  TextEditingController? txtpassC;
+  bool didclick = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    txtuser = new TextEditingController();
+    txtemail = new TextEditingController();
+    txtpass = new TextEditingController();
+    txtpassC = new TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +110,7 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 children: <Widget>[
                   TextField(
+                    controller: txtuser,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.person,
@@ -103,6 +124,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   SizedBox(height: 20),
                   TextField(
+                    controller: txtemail,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.email,
@@ -116,6 +138,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   SizedBox(height: 20),
                   TextField(
+                    controller: txtpass,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.lock,
@@ -130,6 +153,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   SizedBox(height: 20),
                   TextField(
+                    controller: txtpassC,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.lock,
@@ -145,7 +169,25 @@ class _SignUpState extends State<SignUp> {
                   SizedBox(height: 35),
                   Container(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        FirebaseAuth auth = FirebaseAuth.instance;
+                        try {
+                          await auth.createUserWithEmailAndPassword(
+                              email: txtemail!.text, password: txtpass!.text);
+                          print(auth.currentUser!.uid.toString());
+
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(auth.currentUser!.uid.toString())
+                              .set({
+                            "name": txtuser!.text,
+                            "email": txtemail!.text,
+                            "pass": txtpass!.text,
+                          });
+                        } catch (x) {
+                          print(x.toString());
+                        }
+                      },
                       child: Container(
                         width: 170,
                         height: 50,
