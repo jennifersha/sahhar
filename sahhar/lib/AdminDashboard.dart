@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-//import './AddCategory.dart';
-//import './AddProduct.dart';
+import './AddCategory.dart';
 
 class AdminDashboard extends StatelessWidget {
   @override
@@ -54,7 +53,7 @@ class AdminDashboard extends StatelessWidget {
                           children: [
                             SizedBox(width: 20),
                             Text(
-                              'Products',
+                              'Categories',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Color(0xFF7E0000),
@@ -66,11 +65,11 @@ class AdminDashboard extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        /* Navigator.push(
+                        Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AddProduct()),
-                        ) ;
-                        */
+                          MaterialPageRoute(
+                              builder: (context) => AddCategory()),
+                        );
                       },
                       child: Container(
                         height: 50,
@@ -78,7 +77,7 @@ class AdminDashboard extends StatelessWidget {
                           children: [
                             SizedBox(width: 20),
                             Text(
-                              'Add Product',
+                              'Add Category',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Color(0xFF7E0000),
@@ -96,7 +95,7 @@ class AdminDashboard extends StatelessWidget {
                           children: [
                             SizedBox(width: 20),
                             Text(
-                              'Categories',
+                              'Products',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Color(0xFF7E0000),
@@ -107,20 +106,14 @@ class AdminDashboard extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        /* Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddCategory()),
-                        ); */
-                      },
+                      onTap: () {},
                       child: Container(
                         height: 50,
                         child: Row(
                           children: [
                             SizedBox(width: 20),
                             Text(
-                              'Add Category',
+                              'Add Product',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Color(0xFF7E0000),
