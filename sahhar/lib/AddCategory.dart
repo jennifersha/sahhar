@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 class AddCategory extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
+  final _imageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,16 @@ class AddCategory extends StatelessWidget {
               ),
               SizedBox(height: 40),
               InkWell(
-                onTap: () async {},
+                onTap: () async {
+                  ImagePicker imagePicker = ImagePicker();
+                  // use the getImage method on the instance to pick an image from the gallery
+                  var image =
+                      await imagePicker.getImage(source: ImageSource.gallery);
+                  // set the image path to the controller
+                  if (image != null) {
+                    _imageController.text = image.path;
+                  }
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   decoration: BoxDecoration(
