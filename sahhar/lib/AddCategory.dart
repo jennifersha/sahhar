@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddCategory extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
+  final txtcateg = TextEditingController();
   final _imageController = TextEditingController();
 
   @override
@@ -41,13 +42,19 @@ class AddCategory extends StatelessWidget {
               ),
               SizedBox(height: 40),
               TextFormField(
-                controller: _nameController,
+                controller: txtcateg,
                 decoration: InputDecoration(
                   labelText: 'Name of Category',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
+                /*validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter a name';
+                  }
+                  return null; 
+                },*/
               ),
               SizedBox(height: 40),
               InkWell(
@@ -85,7 +92,17 @@ class AddCategory extends StatelessWidget {
               ),
               SizedBox(height: 80),
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  try {
+                    await FirebaseFirestore.instance.collection("categories")
+                        // .doc(auth.currentUser!.uid.toString())
+                        .add({
+                      "name": txtcateg!.text,
+                    });
+                  } catch (x) {
+                    print(x.toString());
+                  }
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   decoration: BoxDecoration(
