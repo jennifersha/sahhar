@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddCategory extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   final txtcateg = TextEditingController();
-  final _imageController = TextEditingController();
+  final imageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class AddCategory extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(20),
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             children: [
               SizedBox(height: 40),
@@ -65,7 +65,7 @@ class AddCategory extends StatelessWidget {
                       await imagePicker.getImage(source: ImageSource.gallery);
                   // set the image path to the controller
                   if (image != null) {
-                    _imageController.text = image.path;
+                    imageController.text = image.path;
                   }
                 },
                 child: Container(
