@@ -99,6 +99,29 @@ class AddCategory extends StatelessWidget {
                         .add({
                       "name": txtcateg!.text,
                     });
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          title: Text("Success",
+                              style: TextStyle(color: Colors.green)),
+                          content: Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Text("Category added successfully"),
+                          ),
+                          actions: <Widget>[
+                            InkWell(
+                              child: Text("OK  "),
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } catch (x) {
                     print(x.toString());
                   }
