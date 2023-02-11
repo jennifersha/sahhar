@@ -2,7 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddProduct extends StatelessWidget {
+class AddProduct extends StatefulWidget {
+  @override
+  AddProductState createState() => AddProductState();
+}
+
+class AddProductState extends State<AddProduct> {
   final formKey = GlobalKey<FormState>();
   final imageController = TextEditingController();
   final txtname = TextEditingController();
@@ -10,6 +15,7 @@ class AddProduct extends StatelessWidget {
   final txtdescri = TextEditingController();
   final txtsize = TextEditingController();
   bool showSizes = false;
+  int count = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +111,9 @@ class AddProduct extends StatelessWidget {
                       icon: Icon(Icons.add),
                       color: Colors.white,
                       onPressed: () {
-                        /*setState(() {
-                    showSizes = !showSizes;
-                  });*/
+                        setState(() {
+                          count++;
+                        });
                       },
                     ),
                   ),
@@ -144,74 +150,112 @@ class AddProduct extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 30),
-              InkWell(
-                onTap: () async {
-                  ImagePicker imagePicker = ImagePicker();
-                  // use the getImage method on the instance to pick an image from the gallery
-                  var image =
-                      await imagePicker.getImage(source: ImageSource.gallery);
-                  // set the image path to the controller
-                  if (image != null) {
-                    imageController.text = image.path;
-                  }
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  width: 230,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 226, 224, 224),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.attach_file),
-                      SizedBox(width: 5),
-                      Text(
-                        'Choose Colors',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      ImagePicker imagePicker = ImagePicker();
+                      // use the getImage method on the instance to pick an image from the gallery
+                      var image = await imagePicker.getImage(
+                          source: ImageSource.gallery);
+                      // set the image path to the controller
+                      if (image != null) {
+                        imageController.text = image.path;
+                      }
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      width: 230,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 226, 224, 224),
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.attach_file),
+                          SizedBox(width: 5),
+                          Text(
+                            'Choose Colors',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 10),
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Color(0xFF7E0000),
+                    child: IconButton(
+                      icon: Icon(Icons.add),
+                      color: Colors.white,
+                      onPressed: () {
+                        /*setState(() {
+                    showSizes = !showSizes;
+                  });*/
+                      },
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 20),
-              InkWell(
-                onTap: () async {
-                  ImagePicker imagePicker = ImagePicker();
-                  // use the getImage method on the instance to pick an image from the gallery
-                  var image =
-                      await imagePicker.getImage(source: ImageSource.gallery);
-                  // set the image path to the controller
-                  if (image != null) {
-                    imageController.text = image.path;
-                  }
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  width: 230,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 226, 224, 224),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.attach_file),
-                      SizedBox(width: 5),
-                      Text(
-                        'Choose Images',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      ImagePicker imagePicker = ImagePicker();
+                      // use the getImage method on the instance to pick an image from the gallery
+                      var image = await imagePicker.getImage(
+                          source: ImageSource.gallery);
+                      // set the image path to the controller
+                      if (image != null) {
+                        imageController.text = image.path;
+                      }
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      width: 230,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 226, 224, 224),
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.attach_file),
+                          SizedBox(width: 5),
+                          Text(
+                            'Choose Images',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 10),
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Color(0xFF7E0000),
+                    child: IconButton(
+                      icon: Icon(Icons.add),
+                      color: Colors.white,
+                      onPressed: () {
+                        /*setState(() {
+                    showSizes = !showSizes;
+                  });*/
+                      },
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 30),
               InkWell(
