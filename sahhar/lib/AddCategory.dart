@@ -40,7 +40,7 @@ class AddCategory extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 60),
               TextFormField(
                 controller: txtcateg,
                 decoration: InputDecoration(
@@ -56,7 +56,7 @@ class AddCategory extends StatelessWidget {
                   return null; 
                 },*/
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 60),
               InkWell(
                 onTap: () async {
                   ImagePicker imagePicker = ImagePicker();
@@ -80,7 +80,7 @@ class AddCategory extends StatelessWidget {
                       Icon(Icons.attach_file),
                       SizedBox(width: 5),
                       Text(
-                        'Choose File',
+                        'Choose Image',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,

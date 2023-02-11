@@ -157,6 +157,7 @@ class AddProduct extends StatelessWidget {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  width: 230,
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 226, 224, 224),
                     borderRadius: BorderRadius.circular(30),
@@ -191,6 +192,7 @@ class AddProduct extends StatelessWidget {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  width: 230,
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 226, 224, 224),
                     borderRadius: BorderRadius.circular(30),
