@@ -106,14 +106,21 @@ class AddCategory extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0)),
                           title: Text("Success",
-                              style: TextStyle(color: Colors.green)),
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold)),
                           content: Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: MediaQuery.of(context).size.width * 10,
                             child: Text("Category added successfully"),
                           ),
                           actions: <Widget>[
                             InkWell(
-                              child: Text("OK  "),
+                              child: Text("OK  ",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold)),
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
