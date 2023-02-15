@@ -64,7 +64,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                height: 180,
+                height: 150,
                 color: Color(0xFF7E0000),
                 child: Align(
                   alignment: Alignment.bottomLeft,
@@ -85,7 +85,7 @@ class LoginPageState extends State<LoginPage> {
                 color: Color(0xFF7E0000),
                 child: Container(
                     width: double.infinity,
-                    height: 35,
+                    height: 25,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(

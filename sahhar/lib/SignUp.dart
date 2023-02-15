@@ -63,12 +63,12 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Container(
-              height: 180,
+              height: 150,
               color: Color(0xFF7E0000),
               child: Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 66, left: 10),
+                  padding: EdgeInsets.only(top: 46, left: 10),
                   child: Column(
                     children: <Widget>[
                       Text(
@@ -96,7 +96,7 @@ class _SignUpState extends State<SignUp> {
               color: Color(0xFF7E0000),
               child: Container(
                   width: double.infinity,
-                  height: 35,
+                  height: 25,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
