@@ -196,8 +196,8 @@ class _SignUpState extends State<SignUp> {
                               .collection("users")
                               .doc(auth.currentUser!.uid.toString())
                               .set({
-                            "First name": txtfirst!.text,
-                            "Last name": txtlast!.text,
+                            "Firstname": txtfirst!.text,
+                            "Lastname": txtlast!.text,
                             "email": txtemail!.text,
                             "pass": txtpass!.text,
                           });
