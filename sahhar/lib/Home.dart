@@ -31,7 +31,7 @@ class _MyWidgetState extends State<Home> {
                 }
                 return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 2, crossAxisCount: 2),
+                      childAspectRatio: 2, crossAxisCount: 3),
                   itemCount: (snapshot.data!).docs.length,
                   padding: EdgeInsets.all(1.0),
                   itemBuilder: (BuildContext context, int index) {

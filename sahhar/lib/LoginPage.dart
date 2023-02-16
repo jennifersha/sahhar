@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sahhar/globals.dart';
-import 'package:sahhar/path/Home.dart';
+import 'package:sahhar/Home.dart';
 import './SignUp.dart';
 import './AdminDashboard.dart';
 
