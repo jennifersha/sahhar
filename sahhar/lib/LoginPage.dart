@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sahhar/globals.dart';
+import 'package:sahhar/path/Home.dart';
 import './SignUp.dart';
 import './AdminDashboard.dart';
 
@@ -19,6 +23,24 @@ class LoginPageState extends State<LoginPage> {
     super.initState();
     txtuser = new TextEditingController();
     txtpass = new TextEditingController();
+  }
+
+  Future<void> signwith(String email, String pass) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.signInWithEmailAndPassword(email: email, password: pass);
+    if (auth == null) {}
+    DocumentSnapshot usr = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .get();
+    Globals.appuser.name =
+        usr['Firstname']!.toString() + ' ' + usr['Lastname']!.toString();
+    Globals.appuser.password = usr['pass']!.toString();
+    Globals.appuser.email = usr['email']!.toString();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Home()),
+    );
   }
 
   bool checkdata() {
@@ -151,11 +173,9 @@ class LoginPageState extends State<LoginPage> {
                           ),
                     Container(
                       child: InkWell(
-                        onTap: checkdata() == false
-                            ? null
-                            : () {
-                                Navigator.pop(context);
-                              },
+                        onTap: () {
+                          signwith(txtuser!.text, txtpass!.text);
+                        },
                         child: Container(
                           width: 170,
                           height: 50,
