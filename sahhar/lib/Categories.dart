@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sahhar/AdminDashboard.dart';
 
 void main() => runApp(const Categories());
 
@@ -124,16 +125,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _selectedIndex == 0
-              ? 'Categories'
-              : _selectedIndex == 1
-                  ? 'Likes'
-                  : _selectedIndex == 2
-                      ? 'Cart'
-                      : 'Account',
+          'Categories',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 30,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
