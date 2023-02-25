@@ -6,6 +6,7 @@ import 'package:sahhar/globals.dart';
 import 'package:sahhar/Home.dart';
 import './SignUp.dart';
 import './AdminDashboard.dart';
+import './Resetpsw.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -196,7 +197,10 @@ class LoginPageState extends State<LoginPage> {
                     SizedBox(height: 10),
                     InkWell(
                       onTap: () {
-                        // Navigate to "Forgot Password" page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Resetpsw()),
+                        );
                       },
                       child: Text(
                         "Forgot Password?",
