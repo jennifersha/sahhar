@@ -201,6 +201,36 @@ class _SignUpState extends State<SignUp> {
                             "email": txtemail!.text,
                             "pass": txtpass!.text,
                           });
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                title: Text("Success",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold)),
+                                content: Container(
+                                  width: MediaQuery.of(context).size.width * 10,
+                                  child: Text("Sign up successfully Done"),
+                                ),
+                                actions: <Widget>[
+                                  InkWell(
+                                    child: Text("OK  ",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.green,
+                                            fontWeight: FontWeight.bold)),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         } catch (x) {
                           print(x.toString());
                         }
