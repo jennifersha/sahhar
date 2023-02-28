@@ -16,6 +16,7 @@ class AddProductState extends State<AddProduct> {
   final txtsize = TextEditingController();
   bool showSizes = false;
   int count = 1;
+  List<String> sizes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +60,12 @@ class AddProductState extends State<AddProduct> {
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                /*validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a name';
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a Name ';
                   }
-                  return null; 
-                },*/
+                  return null;
+                },
               ),
               SizedBox(height: 20),
               TextFormField(
@@ -75,12 +76,12 @@ class AddProductState extends State<AddProduct> {
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                /*validator: (value) {
-                  if (value.isEmpty) {
+                validator: (value) {
+                  if (value!.isEmpty) {
                     return 'Please enter a description';
                   }
-                  return null; 
-                },*/
+                  return null;
+                },
               ),
               SizedBox(height: 20),
               Row(
@@ -94,12 +95,12 @@ class AddProductState extends State<AddProduct> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      /*validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter a size';
-                  }
-                  return null; 
-                },*/
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a size';
+                        }
+                        return null;
+                      },
                       // visible: showSizes,
                     ),
                   ),
@@ -111,7 +112,9 @@ class AddProductState extends State<AddProduct> {
                       icon: Icon(Icons.add),
                       color: Colors.white,
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          showSizes = !showSizes;
+                        });
                       },
                     ),
                   ),
@@ -129,6 +132,12 @@ class AddProductState extends State<AddProduct> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a price';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   SizedBox(width: 10),
@@ -139,9 +148,9 @@ class AddProductState extends State<AddProduct> {
                       icon: Icon(Icons.add),
                       color: Colors.white,
                       onPressed: () {
-                        /*setState(() {
-                    showSizes = !showSizes;
-                  });*/
+                        setState(() {
+                          showSizes = !showSizes;
+                        });
                       },
                     ),
                   ),
