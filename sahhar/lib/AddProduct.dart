@@ -16,6 +16,7 @@ class AddProductState extends State<AddProduct> {
   final txtsize = TextEditingController();
   bool showSizes = false;
   int count = 1;
+  bool switchValue = false;
   List<String> sizes = [];
 
   @override
@@ -39,7 +40,7 @@ class AddProductState extends State<AddProduct> {
           key: formKey,
           child: Column(
             children: [
-              SizedBox(height: 20),
+              //SizedBox(height: 20),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -51,7 +52,7 @@ class AddProductState extends State<AddProduct> {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               TextFormField(
                 controller: txtname,
                 decoration: InputDecoration(
@@ -67,7 +68,7 @@ class AddProductState extends State<AddProduct> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               TextFormField(
                 controller: txtdescri,
                 decoration: InputDecoration(
@@ -83,7 +84,7 @@ class AddProductState extends State<AddProduct> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               Row(
                 children: [
                   Expanded(
@@ -120,7 +121,7 @@ class AddProductState extends State<AddProduct> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               Row(
                 children: [
                   Expanded(
@@ -156,7 +157,7 @@ class AddProductState extends State<AddProduct> {
                   ),
                 ],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               Row(
                 children: [
                   InkWell(
@@ -210,7 +211,7 @@ class AddProductState extends State<AddProduct> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 12),
               Row(
                 children: [
                   InkWell(
@@ -264,7 +265,29 @@ class AddProductState extends State<AddProduct> {
                   ),
                 ],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 22),
+              Row(
+                children: [
+                  Text(
+                    switchValue ? 'With Text' : 'Without Text',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(width: 8),
+                  Switch(
+                    value: switchValue,
+                    onChanged: (bool value) {
+                      setState(() {
+                        switchValue = value;
+                      });
+                    },
+                    activeTrackColor: Colors.lightGreenAccent,
+                    activeColor: Colors.green,
+                    inactiveTrackColor: Colors.grey,
+                    inactiveThumbColor: Colors.white,
+                  ),
+                ],
+              ),
+              SizedBox(height: 22),
               InkWell(
                 onTap: () async {
                   try {
