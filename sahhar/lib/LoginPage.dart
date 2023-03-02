@@ -111,7 +111,7 @@ class LoginPageState extends State<LoginPage> {
                 color: Color(0xFF7E0000),
                 child: Container(
                     width: double.infinity,
-                    height: 25,
+                    height: 20,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
@@ -132,14 +132,14 @@ class LoginPageState extends State<LoginPage> {
                         setState(() {});
                       },
                       controller: txtuser,
-                      maxLength: 20,
+                      //maxLength: 20,
                       decoration: InputDecoration(
                         prefixIcon: Icon(
                           Icons.person,
                           size: 25,
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         labelText: "Username Or Email",
                       ),
@@ -157,7 +157,7 @@ class LoginPageState extends State<LoginPage> {
                           size: 25,
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         labelText: "Password",
                       ),

@@ -96,7 +96,7 @@ class _SignUpState extends State<SignUp> {
               color: Color(0xFF7E0000),
               child: Container(
                   width: double.infinity,
-                  height: 25,
+                  height: 20,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
@@ -119,7 +119,7 @@ class _SignUpState extends State<SignUp> {
                         size: 25,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       labelText: "First Name",
                     ),
@@ -133,7 +133,7 @@ class _SignUpState extends State<SignUp> {
                         size: 25,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       labelText: "Last Name",
                     ),
@@ -147,7 +147,7 @@ class _SignUpState extends State<SignUp> {
                         size: 25,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       labelText: "Email",
                     ),
@@ -161,7 +161,7 @@ class _SignUpState extends State<SignUp> {
                         size: 25,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       labelText: "Password",
                     ),
@@ -176,7 +176,7 @@ class _SignUpState extends State<SignUp> {
                         size: 25,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       labelText: "Confirm Password",
                     ),

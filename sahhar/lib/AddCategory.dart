@@ -46,7 +46,7 @@ class AddCategory extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Name of Category',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(25),
                   ),
                 ),
                 /*validator: (value) {

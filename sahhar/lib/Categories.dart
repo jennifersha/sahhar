@@ -33,27 +33,34 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     Column(
       children: [
-        Container(
-          color: Color.fromARGB(255, 206, 205, 205),
-          child: Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.search),
-                color: Colors.black,
-                onPressed: () {},
-              ),
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search..',
-                    hintStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
+        SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 226, 226, 226),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.search),
+                  color: Colors.black,
+                  onPressed: () {},
+                ),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search..',
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: InputBorder.none,
                     ),
-                    border: InputBorder.none,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Expanded(
