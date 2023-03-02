@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sahhar/AdminDashboard.dart';
+import 'package:sahhar/EditCategory.dart';
 
 void main() => runApp(const Categories());
 
@@ -81,7 +82,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             child: IconButton(
                               icon: Icon(Icons.edit),
                               color: Colors.black,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EditCategory()),
+                                );
+                              },
                             ),
                           ),
                           Align(
