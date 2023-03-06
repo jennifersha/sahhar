@@ -20,6 +20,13 @@ class AddProductState extends State<AddProduct> {
   List<String> sizes = [];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    addtextfile();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -35,10 +42,11 @@ class AddProductState extends State<AddProduct> {
         toolbarHeight: 100,
       ),
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(10),
         child: Form(
           key: formKey,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               //SizedBox(height: 20),
               Container(
@@ -85,44 +93,43 @@ class AddProductState extends State<AddProduct> {
                 },
               ),
               SizedBox(height: 15),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: txtsize,
-                      decoration: InputDecoration(
-                        labelText: 'Size',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
+              Container(
+                height: 100,
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: lst.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(width: 50, child: lst[index]),
+                              );
+                            })),
+                    Container(
+                      width: 50,
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Color(0xFF7E0000),
+                        child: IconButton(
+                          icon: Icon(Icons.add),
+                          color: Colors.white,
+                          onPressed: () {
+                            addtextfile();
+                            setState(() {});
+                          },
                         ),
                       ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter a size';
-                        }
-                        return null;
-                      },
-                      // visible: showSizes,
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Color(0xFF7E0000),
-                    child: IconButton(
-                      icon: Icon(Icons.add),
-                      color: Colors.white,
-                      onPressed: () {
-                        setState(() {
-                          showSizes = !showSizes;
-                        });
-                      },
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(height: 15),
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
                     child: TextFormField(
@@ -291,14 +298,25 @@ class AddProductState extends State<AddProduct> {
               InkWell(
                 onTap: () async {
                   try {
-                    await FirebaseFirestore.instance.collection("products")
+                    var t =
+                        await FirebaseFirestore.instance.collection("products")
+                            // .doc(auth.currentUser!.uid.toString())
+                            .add({
+                      "name": txtname!.text,
+                      "description": txtdescri!.text,
+                      "size": txtsize!.text,
+                      "price": txtprice!.text,
+                    });
+
+/*await FirebaseFirestore.instance.collection("categories").doc(ttt).collection("items")
                         // .doc(auth.currentUser!.uid.toString())
                         .add({
                       "name": txtname!.text,
                       "description": txtdescri!.text,
                       "size": txtsize!.text,
                       "price": txtprice!.text,
-                    });
+                    });*/
+
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -351,6 +369,28 @@ class AddProductState extends State<AddProduct> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  List<Widget> lst = [];
+  void addtextfile() {
+    lst.add(
+      TextFormField(
+        controller: txtsize,
+        decoration: InputDecoration(
+          labelText: 'Size',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter a size';
+          }
+          return null;
+        },
+        // visible: showSizes,
       ),
     );
   }
