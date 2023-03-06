@@ -70,17 +70,26 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   DocumentSnapshot doc = snapshot.data!.docs[index];
                   return Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Container(
-                      color: Color.fromARGB(255, 206, 205, 203),
-                      child: Center(
-                        child: Text(
-                          doc['name'],
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24.0,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 100,
+                          width: 100,
+                          child: Image.network(doc['img']),
+                        ),
+                        Container(
+                          color: Color.fromARGB(255, 206, 205, 203),
+                          child: Center(
+                            child: Text(
+                              doc['name'],
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 10.0,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   );
                 },
