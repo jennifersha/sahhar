@@ -128,7 +128,6 @@ class LoginPageState extends State<LoginPage> {
                   children: <Widget>[
                     TextField(
                       onChanged: (x) {
-                        txtuser!.text = x;
                         setState(() {});
                       },
                       controller: txtuser,
@@ -147,7 +146,6 @@ class LoginPageState extends State<LoginPage> {
                     SizedBox(height: 20),
                     TextField(
                       onChanged: (x) {
-                        txtpass!.text = x;
                         setState(() {});
                       },
                       controller: txtpass,
