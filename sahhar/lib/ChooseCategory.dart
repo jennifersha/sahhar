@@ -80,7 +80,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                               doc['name'],
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 24.0,
+                                fontSize: 10.0,
                               ),
                             ),
                           ),
