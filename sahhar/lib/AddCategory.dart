@@ -1,11 +1,19 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddCategory extends StatelessWidget {
+class AddCategory extends StatefulWidget {
+  @override
+  _AddCategoryState createState() => _AddCategoryState();
+}
+
+class _AddCategoryState extends State<AddCategory> {
   final formKey = GlobalKey<FormState>();
   final txtcateg = TextEditingController();
-  final imageController = TextEditingController();
+  late File _imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +70,14 @@ class AddCategory extends StatelessWidget {
                   onTap: () async {
                     ImagePicker imagePicker = ImagePicker();
                     // use the getImage method on the instance to pick an image from the gallery
-                    var image =
-                        await imagePicker.getImage(source: ImageSource.gallery);
-                    // set the image path to the controller
+                    var image = await imagePicker.getImage(
+                      source: ImageSource.gallery,
+                    );
+                    // set the image file to the state
                     if (image != null) {
-                      imageController.text = image.path;
+                      setState(() {
+                        _imageFile = File(image.path);
+                      });
                     }
                   },
                   child: Container(
@@ -95,11 +106,24 @@ class AddCategory extends StatelessWidget {
                 InkWell(
                   onTap: () async {
                     try {
-                      await FirebaseFirestore.instance.collection("categories")
-                          // .doc(auth.currentUser!.uid.toString())
+                      // upload the image to Firebase Storage
+                      String imageUrl = '';
+                      if (_imageFile != null) {
+                        final ref = FirebaseStorage.instance
+                            .ref()
+                            .child('categories/${DateTime.now().toString()}');
+                        await ref.putFile(_imageFile);
+                        imageUrl = await ref.getDownloadURL();
+                      }
+
+                      // add the category to Firestore
+                      await FirebaseFirestore.instance
+                          .collection('categories')
                           .add({
-                        "name": txtcateg!.text,
+                        'name': txtcateg.text,
+                        'imageUrl': imageUrl,
                       });
+
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
