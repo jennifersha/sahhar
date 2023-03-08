@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(const Home());
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  const Home({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class Home extends StatelessWidget {
 }
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
+  const MyStatefulWidget({Key? key});
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
@@ -28,29 +29,37 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
+    //Categories Page
     Column(
       children: [
-        Container(
-          color: Color.fromARGB(255, 206, 205, 205),
-          child: Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.search),
-                color: Colors.black,
-                onPressed: () {},
-              ),
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search..',
-                    hintStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
+        SizedBox(height: 15),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 226, 226, 226),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.search),
+                  color: Colors.black,
+                  onPressed: () {},
+                ),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search..',
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: InputBorder.none,
                     ),
-                    border: InputBorder.none,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Expanded(
@@ -70,26 +79,42 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   DocumentSnapshot doc = snapshot.data!.docs[index];
                   return Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 100,
-                          width: 100,
-                          child: Image.network(doc['img']),
-                        ),
-                        Container(
-                          color: Color.fromARGB(255, 206, 205, 203),
-                          child: Center(
-                            child: Text(
-                              doc['name'],
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 10.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10),
+                          Container(
+                            height: 100,
+                            width: 100,
+                            child: Image.network(
+                              doc['imageUrl'],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 8),
+                            decoration: BoxDecoration(
+                                //color: Color(0xFF7E0000),
+                                // borderRadius: BorderRadius.circular(20),
+                                ),
+                            child: Center(
+                              child: Text(
+                                doc['name'],
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -99,17 +124,77 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ),
       ],
     ),
+    //Likes Page
     Text(
       'Likes',
       style: optionStyle,
     ),
+    //Cart Page
     Text(
       'Cart',
       style: optionStyle,
     ),
-    Text(
-      'Profile',
-      style: optionStyle,
+    //Profile Page
+    Column(
+      children: [
+        SizedBox(height: 15),
+        Expanded(
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection("users").snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 1, crossAxisCount: 2),
+                itemCount: snapshot.data!.docs.length,
+                padding: EdgeInsets.all(16),
+                itemBuilder: (BuildContext context, int index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Container(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10),
+                          Container(
+                            height: 60,
+                            child: DrawerHeader(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.person),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    doc['Firstname'],
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF7E0000),
+                                    ),
+                                  ),
+                                  Text(
+                                    doc['Lastname'],
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF7E0000),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ],
     ),
   ];
 
@@ -130,7 +215,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   ? 'Likes'
                   : _selectedIndex == 2
                       ? 'Cart'
-                      : 'Account',
+                      : 'Account Details',
           style: TextStyle(
             color: Colors.white,
             fontSize: 30,
@@ -159,7 +244,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Account',
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
