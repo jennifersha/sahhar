@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
 class AddProduct extends StatefulWidget {
   @override
   AddProductState createState() => AddProductState();
@@ -18,11 +20,29 @@ class AddProductState extends State<AddProduct> {
   int count = 1;
   bool switchValue = false;
   List<String> sizes = [];
+  List<String> categories = [];
+  List<bool> SelectedCategory = [];
+
+  // fetch the categories data from Firebase
+  Future<List<String>> fetchCategories() async {
+    QuerySnapshot snapshot = await firestore.collection("categories").get();
+    List<String> categories = [];
+    snapshot.docs.forEach((doc) {
+      categories.add(doc["name"]);
+    });
+    return categories;
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    fetchCategories().then((value) {
+      setState(() {
+        categories = value;
+        SelectedCategory = List<bool>.filled(categories.length, false);
+      });
+    });
     addtextfile();
   }
 
@@ -274,7 +294,7 @@ class AddProductState extends State<AddProduct> {
                     ),
                   ],
                 ),
-                SizedBox(height: 22),
+                SizedBox(height: 10),
                 Row(
                   children: [
                     Text(
@@ -296,7 +316,23 @@ class AddProductState extends State<AddProduct> {
                     ),
                   ],
                 ),
-                SizedBox(height: 22),
+                SizedBox(height: 5),
+                Row(
+                  children: categories.map((category) {
+                    int index = categories.indexOf(category);
+                    return Checkbox(
+                      value: SelectedCategory[index],
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          SelectedCategory[index] = newValue ?? false;
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+
+                SizedBox(height: 10),
+
                 InkWell(
                   onTap: () async {
                     try {
