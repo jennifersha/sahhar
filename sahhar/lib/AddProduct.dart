@@ -23,7 +23,7 @@ class AddProductState extends State<AddProduct> {
   List<String> categories = [];
   List<bool> SelectedCategory = [];
 
-  // fetch the categories data from Firebase
+  // fetch categories data from Firebase
   Future<List<String>> fetchCategories() async {
     QuerySnapshot snapshot = await firestore.collection("categories").get();
     List<String> categories = [];
