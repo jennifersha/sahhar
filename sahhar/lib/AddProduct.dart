@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
+
+final FirebaseStorage storage = FirebaseStorage.instance;
 
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -22,6 +26,7 @@ class AddProductState extends State<AddProduct> {
   List<String> sizes = [];
   List<String> categories = [];
   List<bool> SelectedCategory = [];
+  late File imageFile;
 
   // fetch categories data from Firebase
   Future<List<String>> fetchCategories() async {
@@ -194,10 +199,13 @@ class AddProductState extends State<AddProduct> {
                         ImagePicker imagePicker = ImagePicker();
                         // use the getImage method on the instance to pick an image from the gallery
                         var image = await imagePicker.getImage(
-                            source: ImageSource.gallery);
-                        // set the image path to the controller
+                          source: ImageSource.gallery,
+                        );
+                        // set the image file to the state
                         if (image != null) {
-                          imageController.text = image.path;
+                          setState(() {
+                            imageFile = File(image.path);
+                          });
                         }
                       },
                       child: Container(
@@ -248,10 +256,13 @@ class AddProductState extends State<AddProduct> {
                         ImagePicker imagePicker = ImagePicker();
                         // use the getImage method on the instance to pick an image from the gallery
                         var image = await imagePicker.getImage(
-                            source: ImageSource.gallery);
-                        // set the image path to the controller
+                          source: ImageSource.gallery,
+                        );
+                        // set the image file to the state
                         if (image != null) {
-                          imageController.text = image.path;
+                          setState(() {
+                            imageFile = File(image.path);
+                          });
                         }
                       },
                       child: Container(
@@ -336,6 +347,16 @@ class AddProductState extends State<AddProduct> {
                 InkWell(
                   onTap: () async {
                     try {
+                      // upload the image to Firebase Storage
+                      String imageUrl = '';
+                      if (imageFile != null) {
+                        final ref = FirebaseStorage.instance
+                            .ref()
+                            .child('products/${DateTime.now().toString()}');
+                        await ref.putFile(imageFile);
+                        imageUrl = await ref.getDownloadURL();
+                      }
+
                       var t = await FirebaseFirestore.instance
                           .collection("products")
                           // .doc(auth.currentUser!.uid.toString())
@@ -344,6 +365,8 @@ class AddProductState extends State<AddProduct> {
                         "description": txtdescri!.text,
                         "size": txtsize!.text,
                         "price": txtprice!.text,
+                        'imageUrl': imageUrl,
+                        "switchValue": switchValue,
                       });
 
 /*await FirebaseFirestore.instance.collection("categories").doc(ttt).collection("items")

@@ -13,7 +13,7 @@ class AddCategory extends StatefulWidget {
 class _AddCategoryState extends State<AddCategory> {
   final formKey = GlobalKey<FormState>();
   final txtcateg = TextEditingController();
-  late File _imageFile;
+  late File imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class _AddCategoryState extends State<AddCategory> {
                     // set the image file to the state
                     if (image != null) {
                       setState(() {
-                        _imageFile = File(image.path);
+                        imageFile = File(image.path);
                       });
                     }
                   },
@@ -108,11 +108,11 @@ class _AddCategoryState extends State<AddCategory> {
                     try {
                       // upload the image to Firebase Storage
                       String imageUrl = '';
-                      if (_imageFile != null) {
+                      if (imageFile != null) {
                         final ref = FirebaseStorage.instance
                             .ref()
                             .child('categories/${DateTime.now().toString()}');
-                        await ref.putFile(_imageFile);
+                        await ref.putFile(imageFile);
                         imageUrl = await ref.getDownloadURL();
                       }
 
