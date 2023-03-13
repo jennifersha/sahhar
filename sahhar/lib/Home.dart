@@ -166,15 +166,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                   Icon(Icons.person),
                                   SizedBox(width: 10),
                                   Text(
-                                    doc['Firstname'],
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF7E0000),
-                                    ),
-                                  ),
-                                  Text(
-                                    doc['Lastname'],
+                                    '${doc['Firstname']} ${doc['Lastname']}',
                                     style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
@@ -185,6 +177,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                               ),
                             ),
                           ),
+                          SizedBox(height: 10),
+                          Container(
+                            child: Text(
+                              'Email: ${doc['email']}',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          SizedBox(height: 10),
                         ],
                       ),
                     ),
