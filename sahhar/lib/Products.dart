@@ -79,32 +79,57 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   return Padding(
                     padding: const EdgeInsets.all(16),
                     child: Container(
-                      color: Color.fromARGB(255, 206, 205, 203),
-                      child: Stack(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
                         children: [
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: IconButton(
-                              icon: Icon(Icons.edit),
-                              color: Colors.black,
-                              onPressed: () {},
+                          SizedBox(height: 10),
+                          Container(
+                            height: 80,
+                            width: 80,
+                            child: Image.network(
+                              doc['imageUrl'],
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: IconButton(
-                              icon: Icon(Icons.delete),
-                              color: Colors.black,
-                              onPressed: () {},
-                            ),
-                          ),
-                          Center(
-                            child: Text(
-                              doc['name'],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24.0,
-                              ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 6, horizontal: 6),
+                            decoration: BoxDecoration(
+                                //color: Color(0xFF7E0000),
+                                // borderRadius: BorderRadius.circular(20),
+                                ),
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: IconButton(
+                                    icon: Icon(Icons.edit),
+                                    color: Colors.black,
+                                    onPressed: () {},
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: IconButton(
+                                    icon: Icon(Icons.delete),
+                                    color: Colors.black,
+                                    onPressed: () {},
+                                  ),
+                                ),
+                                Center(
+                                  child: Text(
+                                    doc['name'],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
