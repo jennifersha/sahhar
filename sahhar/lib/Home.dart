@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'HomeProducts.dart';
+
 void main() => runApp(const Home());
 
 class Home extends StatelessWidget {
@@ -77,43 +79,55 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 padding: EdgeInsets.all(16),
                 itemBuilder: (BuildContext context, int index) {
                   DocumentSnapshot doc = snapshot.data!.docs[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10),
-                          Container(
-                            height: 100,
-                            width: 100,
-                            child: Image.network(
-                              doc['imageUrl'],
-                              fit: BoxFit.cover,
-                            ),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeProducts(
+                            categoryName: doc['name'],
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 8),
-                            decoration: BoxDecoration(
-                                //color: Color(0xFF7E0000),
-                                // borderRadius: BorderRadius.circular(20),
-                                ),
-                            child: Center(
-                              child: Text(
-                                doc['name'],
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 20,
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 10),
+                            Container(
+                              height: 100,
+                              width: 100,
+                              child: Image.network(
+                                doc['imageUrl'],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 8),
+                              decoration: BoxDecoration(
+                                  //color: Color(0xFF7E0000),
+                                  // borderRadius: BorderRadius.circular(20),
+                                  ),
+                              child: Center(
+                                child: Text(
+                                  doc['name'],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 20,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
