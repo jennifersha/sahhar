@@ -27,6 +27,7 @@ class AddProductState extends State<AddProduct> {
   List<String> categories = [];
   List<bool> SelectedCategory = [];
   late File imageFile;
+  late File colorFile;
 
   // fetch categories data from Firebase
   Future<List<String>> fetchCategories() async {
@@ -204,7 +205,7 @@ class AddProductState extends State<AddProduct> {
                         // set the image file to the state
                         if (image != null) {
                           setState(() {
-                            imageFile = File(image.path);
+                            colorFile = File(image.path);
                           });
                         }
                       },
@@ -357,6 +358,16 @@ class AddProductState extends State<AddProduct> {
                         imageUrl = await ref.getDownloadURL();
                       }
 
+                      // upload the image to Firebase Storage
+                      String colorUrl = '';
+                      if (colorFile != null) {
+                        final ref = FirebaseStorage.instance
+                            .ref()
+                            .child('products/${DateTime.now().toString()}');
+                        await ref.putFile(colorFile);
+                        colorUrl = await ref.getDownloadURL();
+                      }
+
                       var t = await FirebaseFirestore.instance
                           .collection("products")
                           // .doc(auth.currentUser!.uid.toString())
@@ -366,6 +377,7 @@ class AddProductState extends State<AddProduct> {
                         "size": txtsize!.text,
                         "price": txtprice!.text,
                         'imageUrl': imageUrl,
+                        'colorUrl': colorUrl,
                         "switchValue": switchValue,
                       });
 
