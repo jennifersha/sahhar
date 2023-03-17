@@ -26,6 +26,7 @@ class AddProductState extends State<AddProduct> {
   List<String> sizes = [];
   List<String> categories = [];
   List<bool> SelectedCategory = [];
+  int selectedCategoryIndex = 0;
   late File imageFile;
   late File colorFile;
 
@@ -329,18 +330,24 @@ class AddProductState extends State<AddProduct> {
                   ],
                 ),
                 SizedBox(height: 5),
-                Row(
-                  children: categories.map((category) {
-                    int index = categories.indexOf(category);
-                    return Checkbox(
-                      value: SelectedCategory[index],
-                      onChanged: (bool? newValue) {
-                        setState(() {
-                          SelectedCategory[index] = newValue ?? false;
-                        });
-                      },
-                    );
-                  }).toList(),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: categories.map((category) {
+                      int index = categories.indexOf(category);
+                      return Row(children: [
+                        Checkbox(
+                          value: SelectedCategory[index],
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              SelectedCategory[index] = newValue ?? false;
+                            });
+                          },
+                        ),
+                        Text(category) // add the category name here
+                      ]);
+                    }).toList(),
+                  ),
                 ),
 
                 SizedBox(height: 10),
@@ -368,9 +375,9 @@ class AddProductState extends State<AddProduct> {
                         colorUrl = await ref.getDownloadURL();
                       }
 
+                      // Save product information to the "products" collection
                       var t = await FirebaseFirestore.instance
                           .collection("products")
-                          // .doc(auth.currentUser!.uid.toString())
                           .add({
                         "name": txtname!.text,
                         "description": txtdescri!.text,
@@ -379,17 +386,45 @@ class AddProductState extends State<AddProduct> {
                         'imageUrl': imageUrl,
                         'colorUrl': colorUrl,
                         "switchValue": switchValue,
+                        "categories": SelectedCategory.asMap()
+                            .entries
+                            .where((entry) => entry.value == true)
+                            .map((entry) => categories[entry.key])
+                            .toList(),
                       });
 
-/*await FirebaseFirestore.instance.collection("categories").doc(ttt).collection("items")
-                        // .doc(auth.currentUser!.uid.toString())
-                        .add({
-                      "name": txtname!.text,
-                      "description": txtdescri!.text,
-                      "size": txtsize!.text,
-                      "price": txtprice!.text,
-                    });*/
+                      // Save product information to the selected categories
+                      List<String> selectedCategories = SelectedCategory.asMap()
+                          .entries
+                          .where((entry) => entry.value == true)
+                          .map((entry) => categories[entry.key])
+                          .toList();
 
+                      for (String selectedCategory in selectedCategories) {
+                        QuerySnapshot snapshot = await FirebaseFirestore
+                            .instance
+                            .collection("categories")
+                            .where("name", isEqualTo: selectedCategory)
+                            .get();
+
+                        if (snapshot.docs.length > 0) {
+                          String categoryId = snapshot.docs[0].id;
+
+                          await FirebaseFirestore.instance
+                              .collection("categories")
+                              .doc(categoryId)
+                              .collection("items")
+                              .add({
+                            "name": txtname!.text,
+                            "description": txtdescri!.text,
+                            "size": txtsize!.text,
+                            "price": txtprice!.text,
+                            'imageUrl': imageUrl,
+                            'colorUrl': colorUrl,
+                            "switchValue": switchValue,
+                          });
+                        }
+                      }
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
