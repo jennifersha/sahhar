@@ -3,8 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import 'HomeProducts.dart';
+import 'package:sahhar/HomeProducts.dart';
 
 void main() => runApp(const Home());
 
@@ -86,6 +85,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         MaterialPageRoute(
                           builder: (context) => HomeProducts(
                             categoryName: doc['name'],
+                            categoryId: doc.id,
                           ),
                         ),
                       );
