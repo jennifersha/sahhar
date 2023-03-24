@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sahhar/ProductDetails.dart';
 
 class HomeProducts extends StatefulWidget {
   final String categoryName;
@@ -22,10 +23,10 @@ class HomeProductsState extends State<HomeProducts> {
   @override
   void initState() {
     super.initState();
-    categoryId = widget.categoryId; // Initialize categoryId in initState
+    categoryId = widget.categoryId;
   }
 
-  // Move the StreamBuilder to a separate method
+  // Moved StreamBuilder to Separate Method
   Widget buildProductGrid() {
     if (categoryId == null || categoryId.isEmpty) {
       return Center(
@@ -48,38 +49,107 @@ class HomeProductsState extends State<HomeProducts> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 1, crossAxisCount: 2),
             itemCount: snapshot.data!.docs.length,
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(12),
             itemBuilder: (BuildContext context, int index) {
               DocumentSnapshot doc = snapshot.data!.docs[index];
               return Padding(
-                padding: const EdgeInsets.all(16),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Container(
-                        height: 80,
-                        width: 80,
-                        child: Image.network(
-                          doc['imageUrl'],
-                          fit: BoxFit.cover,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 6.0, vertical: 6.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductDetails(
+                          productName: doc['name'],
+                          productId: doc.id,
                         ),
                       ),
-                      Center(
-                        child: Text(
-                          doc['name'],
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 20,
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 1),
+                        Container(
+                          height: 110,
+                          width: 110,
+                          child: Image.network(
+                            doc['imageUrl'],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(height: 2),
+                        /*Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 24.0),
+                          child: Text(
+                            doc['name'],
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
-                    ],
+                      SizedBox(height: 2),*/
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 24.0),
+                            child: Text(
+                              doc['description'],
+                              style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                        //SizedBox(height: 2),
+                        Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 24.0),
+                                child: Text(
+                                  doc['price'],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 40),
+                            Expanded(
+                              child: IconButton(
+                                icon: Icon(Icons.favorite_border),
+                                color: Colors.black,
+                                onPressed: () {},
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: IconButton(
+                                icon: Icon(Icons.shopping_cart_outlined),
+                                color: Colors.black,
+                                onPressed: () {},
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -113,15 +183,15 @@ class HomeProductsState extends State<HomeProducts> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 15),
+          //SizedBox(height: 15),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 0),
             child: Container(
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 226, 226, 226),
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: Row(
+              /*child: Row(
                 children: [
                   IconButton(
                     icon: Icon(Icons.search),
@@ -140,7 +210,7 @@ class HomeProductsState extends State<HomeProducts> {
                     ),
                   ),
                 ],
-              ),
+              ),*/
             ),
           ),
           buildProductGrid(), // Call the method here
