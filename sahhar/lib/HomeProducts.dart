@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sahhar/ProductDetails.dart';
@@ -10,13 +9,31 @@ class HomeProducts extends StatefulWidget {
   final String categoryName;
   final String categoryId;
 
-  HomeProducts({required this.categoryName, required this.categoryId});
+  HomeProducts({
+    required this.categoryName,
+    required this.categoryId,
+  });
 
   @override
   HomeProductsState createState() => HomeProductsState();
 }
 
 class HomeProductsState extends State<HomeProducts> {
+  bool isFavorite = false;
+  bool isCart = false;
+
+  void toggleFavorite() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
+
+  void toggleCart() {
+    setState(() {
+      isCart = !isCart;
+    });
+  }
+
   int _selectedIndex = 0;
   late String categoryId;
 
@@ -61,8 +78,12 @@ class HomeProductsState extends State<HomeProducts> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ProductDetails(
-                          productName: doc['name'],
-                          productId: doc.id,
+                          imageUrl: doc['imageUrl'],
+                          name: doc['name'],
+                          price: doc['price'],
+                          colorUrl: doc['colorUrl'],
+                          size: doc['size'],
+                          description: doc['description'],
                         ),
                       ),
                     );
@@ -133,17 +154,29 @@ class HomeProductsState extends State<HomeProducts> {
                             SizedBox(width: 40),
                             Expanded(
                               child: IconButton(
-                                icon: Icon(Icons.favorite_border),
-                                color: Colors.black,
-                                onPressed: () {},
+                                icon: Icon(
+                                  isFavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: Color(0xFF7E0000),
+                                ),
+                                onPressed: () {
+                                  toggleFavorite();
+                                },
                               ),
                             ),
                             SizedBox(width: 10),
                             Expanded(
                               child: IconButton(
-                                icon: Icon(Icons.shopping_cart_outlined),
-                                color: Colors.black,
-                                onPressed: () {},
+                                icon: Icon(
+                                  isCart
+                                      ? Icons.shopping_cart
+                                      : Icons.shopping_cart_outlined,
+                                  color: Color(0xFF7E0000),
+                                ),
+                                onPressed: () {
+                                  toggleCart();
+                                },
                               ),
                             ),
                           ],
