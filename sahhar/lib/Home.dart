@@ -18,6 +18,9 @@ class Home extends StatelessWidget {
   }
 }
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+User? user = _auth.currentUser;
+
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key});
 
@@ -139,15 +142,239 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ],
     ),
     //Likes Page
-    Text(
-      'Likes',
-      style: optionStyle,
+    Container(
+      padding: EdgeInsets.all(26),
+      child: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(user?.uid)
+            .collection('likes')
+            .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text('No likes yet.'),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot productDetails = snapshot.data!.docs[index];
+
+                return Container(
+                  margin: EdgeInsets.only(bottom: 16),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.network(
+                        productDetails['imageUrl'],
+                        width: 100,
+                        height: 100,
+                      ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              productDetails['name'],
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              productDetails['description'],
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.blueGrey,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              productDetails['price'],
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF7E0000),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      IconButton(
+                        onPressed: () {
+                          // Add to cart function
+                        },
+                        icon: Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.black,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          // Delete from likes function
+                        },
+                        icon: Icon(
+                          Icons.delete_outlined,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+        },
+      ),
     ),
     //Cart Page
-    Text(
-      'Cart',
-      style: optionStyle,
+    Container(
+      padding: EdgeInsets.all(26),
+      child: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(user?.uid)
+            .collection('cart')
+            .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text('Cart empty.'),
+            );
+          } else {
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      DocumentSnapshot productDetails =
+                          snapshot.data!.docs[index];
+
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 16),
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.network(
+                              productDetails['imageUrl'],
+                              width: 100,
+                              height: 100,
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    productDetails['name'],
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Text(
+                                    productDetails['description'],
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    productDetails['price'],
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF7E0000),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            IconButton(
+                              onPressed: () {
+                                // Add to cart function
+                              },
+                              icon: Icon(
+                                Icons.shopping_cart_outlined,
+                                color: Colors.black,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                // Delete from likes function
+                              },
+                              icon: Icon(
+                                Icons.delete_outlined,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Divider(
+                  thickness: 2,
+                  color: Colors.black,
+                ),
+                SizedBox(height: 1),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 16),
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Checkout',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        },
+      ),
     ),
+
     //Profile Page
     Column(
       children: [
