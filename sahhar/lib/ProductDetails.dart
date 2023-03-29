@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -18,23 +20,16 @@ class ProductDetails extends StatefulWidget {
   });
 
   @override
-  _ProductDetailsState createState() => _ProductDetailsState();
+  ProductDetailsState createState() => ProductDetailsState();
 }
 
-class _ProductDetailsState extends State<ProductDetails> {
+class ProductDetailsState extends State<ProductDetails> {
   bool isFavorite = false;
   bool isCart = false;
 
-  void toggleFavorite() {
-    setState(() {
-      isFavorite = !isFavorite;
-    });
-  }
-
-  void toggleCart() {
-    setState(() {
-      isCart = !isCart;
-    });
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -89,8 +84,31 @@ class _ProductDetailsState extends State<ProductDetails> {
                         isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: Color(0xFF7E0000),
                       ),
-                      onPressed: () {
-                        toggleFavorite();
+                      onPressed: () async {
+                        setState(() {
+                          isFavorite = !isFavorite;
+                        });
+
+                        final user = FirebaseAuth.instance.currentUser;
+                        if (user != null) {
+                          final productId = widget.name;
+                          final productDetails = {
+                            'name': widget.name,
+                            'price': widget.price,
+                            'imageUrl': widget.imageUrl,
+                            'colorUrl': widget.colorUrl,
+                            'size': widget.size,
+                            'description': widget.description,
+                          };
+
+                          // Save the product information to the "likes" collection in Firebase
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user.uid)
+                              .collection('likes')
+                              .doc(productId)
+                              .set(productDetails);
+                        }
                       },
                     ),
                   ],
@@ -101,8 +119,31 @@ class _ProductDetailsState extends State<ProductDetails> {
                     isCart ? Icons.shopping_cart : Icons.shopping_cart_outlined,
                     color: Color(0xFF7E0000),
                   ),
-                  onPressed: () {
-                    toggleCart();
+                  onPressed: () async {
+                    setState(() {
+                      isCart = !isCart;
+                    });
+
+                    final user = FirebaseAuth.instance.currentUser;
+                    if (user != null) {
+                      final productId = widget.name;
+                      final productDetails = {
+                        'name': widget.name,
+                        'price': widget.price,
+                        'imageUrl': widget.imageUrl,
+                        'colorUrl': widget.colorUrl,
+                        'size': widget.size,
+                        'description': widget.description,
+                      };
+
+                      // Save the product information to the "likes" collection in Firebase
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user.uid)
+                          .collection('cart')
+                          .doc(productId)
+                          .set(productDetails);
+                    }
                   },
                 ),
               ],
