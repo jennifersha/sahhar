@@ -142,7 +142,7 @@ class HomeProductsState extends State<HomeProducts> {
                               child: Padding(
                                 padding: EdgeInsets.only(left: 24.0),
                                 child: Text(
-                                  doc['price'],
+                                  '${doc['price']} ₪',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.normal,

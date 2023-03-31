@@ -4,6 +4,9 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sahhar/HomeProducts.dart';
+import 'package:sahhar/LoginPage.dart';
+import 'package:sahhar/Checkout.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(const Home());
 
@@ -32,6 +35,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // ignore: prefer_final_fields
   static List<Widget> _widgetOptions = <Widget>[
     //Categories Page
     Column(
@@ -203,7 +207,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              productDetails['price'],
+                              '${productDetails['price']} ₪',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -307,7 +311,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                   ),
                                   SizedBox(height: 8),
                                   Text(
-                                    productDetails['price'],
+                                    '${productDetails['price']} ₪',
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -348,7 +352,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 ),
                 SizedBox(height: 1),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Checkout()),
+                    );
+                  },
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: 16),
                     height: 60,
@@ -386,51 +395,160 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               if (!snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               }
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 1, crossAxisCount: 2),
-                itemCount: snapshot.data!.docs.length,
-                padding: EdgeInsets.all(16),
-                itemBuilder: (BuildContext context, int index) {
-                  DocumentSnapshot doc = snapshot.data!.docs[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Container(
-                      child: Column(
+              return Column(
+                children: [
+                  SizedBox(height: 10),
+                  Container(
+                    height: 60,
+                    child: DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: Row(
                         children: [
-                          SizedBox(height: 10),
                           Container(
-                            height: 60,
-                            child: DrawerHeader(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.person),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    '${doc['Firstname']} ${doc['Lastname']}',
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF7E0000),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.blueGrey,
+                            ),
+                            child: Icon(Icons.person, color: Colors.white),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            '${snapshot.data!.docs[0]['Firstname']} ${snapshot.data!.docs[0]['Lastname']}',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF7E0000),
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Container(
-                            child: Text(
-                              'Email: ${doc['email']}',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          SizedBox(height: 10),
                         ],
                       ),
                     ),
-                  );
-                },
+                  ),
+                  SizedBox(height: 30),
+                  Container(
+                    child: Text(
+                      '${snapshot.data!.docs[0]['email']}',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Expanded(child: SizedBox()),
+                  GestureDetector(
+                    onTap: () {
+                      //openWhatsApp();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top:
+                              BorderSide(width: 1, color: Colors.grey.shade300),
+                          bottom:
+                              BorderSide(width: 1, color: Colors.grey.shade300),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Help',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0)),
+                            title: Text("Sahhar Laser Cut Shop",
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold)),
+                            content: Container(
+                              width: MediaQuery.of(context).size.width * 10,
+                              child: Text(
+                                  "Home decor . Arts & Crafts store . Designs . Laser engraving and cutting on wood"),
+                            ),
+                            actions: <Widget>[
+                              InkWell(
+                                child: Text("OK  ",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold)),
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                                width: 1, color: Colors.grey.shade300),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'About',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      // Log out the current user
+                      await FirebaseAuth.instance.signOut();
+
+                      // Navigate back to the login screen
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        (route) => false,
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom:
+                              BorderSide(width: 1, color: Colors.grey.shade300),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Logout',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               );
             },
           ),
@@ -455,7 +573,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               : _selectedIndex == 1
                   ? 'Likes'
                   : _selectedIndex == 2
-                      ? 'Cart'
+                      ? 'MyCart'
                       : 'Account Details',
           style: TextStyle(
             color: Colors.white,
@@ -496,3 +614,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     );
   }
 }
+
+/*void openWhatsApp() async {
+  String phoneNumber = '+972526789152'; // replace with your phone number
+  String message = 'Hello!'; // replace with your message
+  String url = 'https://wa.me/$phoneNumber/?text=${Uri.parse(message)}';
+  if (await canLaunchUrl(Uri.parse(url))) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}*/
