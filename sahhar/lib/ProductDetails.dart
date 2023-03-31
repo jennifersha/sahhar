@@ -75,10 +75,10 @@ class ProductDetailsState extends State<ProductDetails> {
                   children: [
                     SizedBox(width: 180),
                     Text(
-                      widget.price,
+                      '${widget.price} ₪',
                       style: TextStyle(fontSize: 24, color: Color(0xFF7E0000)),
                     ),
-                    SizedBox(width: 70),
+                    SizedBox(width: 50),
                     IconButton(
                       icon: Icon(
                         isFavorite ? Icons.favorite : Icons.favorite_border,
