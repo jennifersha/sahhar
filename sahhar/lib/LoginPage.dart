@@ -7,9 +7,9 @@ import 'package:sahhar/Home.dart';
 import './SignUp.dart';
 import './AdminDashboard.dart';
 import './Resetpsw.dart';
-//import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:flutter_twitter_login/flutter_twitter_login.dart';
+import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -52,6 +52,63 @@ class LoginPageState extends State<LoginPage> {
       return false;
     }
     return true;
+  }
+
+//login with google
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  Future<void> loginWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        await FirebaseAuth.instance.signInWithCredential(credential);
+        // Navigate to the home screen
+      } else {
+        // Handle login failure
+      }
+    } catch (e) {
+      // Handle login failure
+    }
+  }
+
+  //login with facebook
+  Future<void> loginWithFacebook() async {
+    final LoginResult result = await FacebookAuth.instance.login();
+    if (result.status == LoginStatus.success) {
+      final AccessToken accessToken = result.accessToken!;
+      final AuthCredential credential =
+          FacebookAuthProvider.credential(accessToken.token);
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      // Navigate to the home screen
+    } else {
+      // Handle login failure
+    }
+  }
+
+  //login with twitter
+  final TwitterLogin twitterLogin = TwitterLogin(
+    consumerKey: '<your_consumer_key>',
+    consumerSecret: '<your_consumer_secret>',
+  );
+
+  Future<void> loginWithTwitter() async {
+    final TwitterLoginResult result = await twitterLogin.authorize();
+    if (result.status == TwitterLoginStatus.loggedIn) {
+      final AuthCredential credential = TwitterAuthProvider.credential(
+        accessToken: result.session!.token,
+        secret: result.session!.secret,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      // Navigate to the home screen
+    } else {
+      // Handle login failure
+    }
   }
 
   @override
@@ -212,29 +269,38 @@ class LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          child: Image.asset(
-                            'assets/facebook.png',
-                            width: 40,
-                            height: 40,
+                        GestureDetector(
+                          onTap: () => loginWithFacebook(),
+                          child: Container(
+                            child: Image.asset(
+                              'assets/facebook.png',
+                              width: 40,
+                              height: 40,
+                            ),
                           ),
                         ),
                         SizedBox(width: 15),
-                        Container(
-                          child: Image.asset(
-                            'assets/google.png',
-                            width: 40,
-                            height: 40,
+                        GestureDetector(
+                          onTap: () => loginWithGoogle(),
+                          child: Container(
+                            child: Image.asset(
+                              'assets/google.png',
+                              width: 40,
+                              height: 40,
+                            ),
                           ),
                         ),
                         SizedBox(width: 15),
-                        Container(
-                          child: Image.asset(
-                            'assets/twitter.png',
-                            width: 40,
-                            height: 40,
+                        GestureDetector(
+                          onTap: () => loginWithTwitter(),
+                          child: Container(
+                            child: Image.asset(
+                              'assets/twitter.png',
+                              width: 40,
+                              height: 40,
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     SizedBox(height: 30),
