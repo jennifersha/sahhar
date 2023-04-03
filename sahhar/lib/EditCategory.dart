@@ -1,11 +1,43 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class EditCategory extends StatelessWidget {
+class EditCategory extends StatefulWidget {
+  final String categoryId;
+
+  const EditCategory({Key? key, required this.categoryId}) : super(key: key);
+
+  @override
+  _EditCategoryState createState() => _EditCategoryState();
+}
+
+class _EditCategoryState extends State<EditCategory> {
   final formKey = GlobalKey<FormState>();
   final txtcateg = TextEditingController();
   final imageController = TextEditingController();
+  late File imageFile;
+  //String? imageUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    // Retrieve the category details from Firebase
+    FirebaseFirestore.instance
+        .collection('categories')
+        .doc(widget.categoryId)
+        .get()
+        .then((docSnapshot) {
+      if (docSnapshot.exists) {
+        setState(() {
+          txtcateg.text = docSnapshot['name'];
+          imageFile = docSnapshot['image'];
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +86,7 @@ class EditCategory extends StatelessWidget {
                   if (value.isEmpty) {
                     return 'Please enter a name';
                   }
-                  return null; 
+                  return null;
                 },*/
                 ),
                 SizedBox(height: 60),
@@ -66,7 +98,9 @@ class EditCategory extends StatelessWidget {
                         await imagePicker.getImage(source: ImageSource.gallery);
                     // set the image path to the controller
                     if (image != null) {
-                      imageController.text = image.path;
+                      setState(() {
+                        imageFile = File(image.path);
+                      });
                     }
                   },
                   child: Container(
@@ -95,11 +129,25 @@ class EditCategory extends StatelessWidget {
                 InkWell(
                   onTap: () async {
                     try {
-                      await FirebaseFirestore.instance.collection("categories")
-                          // .doc(auth.currentUser!.uid.toString())
-                          .add({
-                        "name": txtcateg.text,
+                      // upload the image to Firebase Storage
+                      String imageUrl = '';
+                      if (imageFile != null) {
+                        final ref = FirebaseStorage.instance
+                            .ref()
+                            .child('categories/${DateTime.now().toString()}');
+                        await ref.putFile(imageFile);
+                        imageUrl = await ref.getDownloadURL();
+                      }
+
+                      // add the category to Firestore
+                      await FirebaseFirestore.instance
+                          .collection("categories")
+                          .doc(widget.categoryId)
+                          .update({
+                        'name': txtcateg.text,
+                        'imageUrl': imageUrl,
                       });
+
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -113,11 +161,11 @@ class EditCategory extends StatelessWidget {
                                     fontWeight: FontWeight.bold)),
                             content: Container(
                               width: MediaQuery.of(context).size.width * 10,
-                              child: Text("Category added successfully"),
+                              child: Text("Category updated successfully"),
                             ),
                             actions: <Widget>[
                               InkWell(
-                                child: Text("OK  ",
+                                child: Text("OK ",
                                     style: TextStyle(
                                         fontSize: 22,
                                         color: Colors.green,
