@@ -125,7 +125,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                   child: IconButton(
                                     icon: Icon(Icons.delete),
                                     color: Colors.black,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      deleteCategory(doc.id);
+                                    },
                                   ),
                                 ),
                                 Center(
@@ -179,5 +181,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ? _widgetOptions.elementAt(_selectedIndex)
           : Center(child: _widgetOptions.elementAt(_selectedIndex)),
     );
+  }
+}
+
+void deleteCategory(String categoryId) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('categories')
+        .doc(categoryId)
+        .delete();
+  } catch (e) {
+    print('Error deleting category: $e');
   }
 }
