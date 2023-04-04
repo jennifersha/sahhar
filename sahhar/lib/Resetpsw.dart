@@ -8,7 +8,13 @@ class Resetpsw extends StatefulWidget {
 
 class ResetpswPageState extends State<Resetpsw> {
   final formKey = GlobalKey<FormState>();
-  TextEditingController email = new TextEditingController();
+  late TextEditingController email;
+
+  @override
+  void initState() {
+    super.initState();
+    email = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,7 @@ class ResetpswPageState extends State<Resetpsw> {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter Your Email';
+                    return 'Please enter your email';
                   }
                   return null;
                 },
@@ -58,32 +64,7 @@ class ResetpswPageState extends State<Resetpsw> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)),
-                          title: Text("Reset Password Success",
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold)),
-                          content: Container(
-                            width: MediaQuery.of(context).size.width * 10,
-                            child: Text(
-                                "Email has been sent to $email with info how to Reset your Password."),
-                          ),
-                          actions: <Widget>[
-                            InkWell(
-                              child: Text("OK  ",
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold)),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
+                        return buildAlertDialog(email.text);
                       },
                     );
                   }
@@ -107,6 +88,41 @@ class ResetpswPageState extends State<Resetpsw> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildAlertDialog(String email) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      title: Text(
+        "Reset Password Success",
+        style: TextStyle(
+          fontSize: 24,
+          color: Colors.green,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      content: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Text(
+          "An email has been sent to : $email To reset your password.",
+        ),
+      ),
+      actions: <Widget>[
+        InkWell(
+          child: Text(
+            "OK",
+            style: TextStyle(
+              fontSize: 22,
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
     );
   }
 }
