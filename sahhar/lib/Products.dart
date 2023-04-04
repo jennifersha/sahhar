@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:sahhar/EditProduct.dart';
 
 void main() => runApp(const Products());
 
@@ -108,7 +109,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                   child: IconButton(
                                     icon: Icon(Icons.edit),
                                     color: Colors.black,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => EditProduct(
+                                                  categoryId: doc.id,
+                                                  productId: doc.id,
+                                                )),
+                                      );
+                                    },
                                   ),
                                 ),
                                 Align(
@@ -116,7 +126,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                   child: IconButton(
                                     icon: Icon(Icons.delete),
                                     color: Colors.black,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      deleteProduct(doc.id);
+                                    },
                                   ),
                                 ),
                                 Center(
@@ -170,5 +182,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ? _widgetOptions.elementAt(_selectedIndex)
           : Center(child: _widgetOptions.elementAt(_selectedIndex)),
     );
+  }
+}
+
+void deleteProduct(String productId) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection('products')
+        .doc(productId)
+        .delete();
+  } catch (e) {
+    print('Error deleting product: $e');
   }
 }
