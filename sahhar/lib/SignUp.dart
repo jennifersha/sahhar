@@ -28,6 +28,60 @@ class _SignUpState extends State<SignUp> {
     txtpassC = new TextEditingController();
   }
 
+  bool validateInputs() {
+    if (txtfirst!.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'Please enter your First Name',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF7E0000),
+      ));
+      return false;
+    }
+    if (txtlast!.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'Please enter your Last Name',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF7E0000),
+      ));
+      return false;
+    }
+    if (txtemail!.text.isEmpty || !txtemail!.text.contains('@')) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'Please enter a Valid email address',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF7E0000),
+      ));
+      return false;
+    }
+    if (txtpass!.text.isEmpty || txtpass!.text.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'Please enter a Password with at least 6 characters',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF7E0000),
+      ));
+      return false;
+    }
+    if (txtpassC!.text != txtpass!.text) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'Passwords do Not match',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF7E0000),
+      ));
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,6 +241,7 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       child: InkWell(
                         onTap: () async {
+                          if (!validateInputs()) return;
                           FirebaseAuth auth = FirebaseAuth.instance;
                           try {
                             await auth.createUserWithEmailAndPassword(
@@ -234,8 +289,9 @@ class _SignUpState extends State<SignUp> {
                                 );
                               },
                             );
-                          } catch (x) {
-                            print(x.toString());
+                          } catch (error) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(error.toString())));
                           }
                         },
                         child: Container(

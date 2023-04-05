@@ -9,7 +9,7 @@ import './AdminDashboard.dart';
 import './Resetpsw.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_twitter_login/flutter_twitter_login.dart';
+//import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -21,6 +21,32 @@ class LoginPageState extends State<LoginPage> {
   TextEditingController? txtpass;
   bool didclick = false;
 
+  bool validateInputs() {
+    if (txtuser!.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Please enter your email',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Color(0xFF7E0000),
+        ),
+      );
+      return false;
+    }
+    if (txtpass!.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'Please enter your password',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF7E0000),
+      ));
+      return false;
+    }
+    return true;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -31,20 +57,38 @@ class LoginPageState extends State<LoginPage> {
 
   Future<void> signwith(String email, String pass) async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    await auth.signInWithEmailAndPassword(email: email, password: pass);
-    if (auth == null) {}
-    DocumentSnapshot usr = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(auth.currentUser!.uid)
-        .get();
-    Globals.appuser.name =
-        usr['Firstname']!.toString() + ' ' + usr['Lastname']!.toString();
-    Globals.appuser.password = usr['pass']!.toString();
-    Globals.appuser.email = usr['email']!.toString();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Home()),
-    );
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: pass,
+      );
+      DocumentSnapshot usr = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get();
+      Globals.appuser.name =
+          usr['Firstname']!.toString() + ' ' + usr['Lastname']!.toString();
+      Globals.appuser.password = usr['pass']!.toString();
+      Globals.appuser.email = usr['email']!.toString();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Email or password is incorrect',
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Color(0xFF7E0000),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   bool checkdata() {
@@ -92,7 +136,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   //login with twitter
-  final TwitterLogin twitterLogin = TwitterLogin(
+  /*final TwitterLogin twitterLogin = TwitterLogin(
     consumerKey: '<your_consumer_key>',
     consumerSecret: '<your_consumer_secret>',
   );
@@ -109,7 +153,7 @@ class LoginPageState extends State<LoginPage> {
     } else {
       // Handle login failure
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +232,6 @@ class LoginPageState extends State<LoginPage> {
                         setState(() {});
                       },
                       controller: txtuser,
-                      //maxLength: 20,
                       decoration: InputDecoration(
                         prefixIcon: Icon(
                           Icons.person,
@@ -197,7 +240,7 @@ class LoginPageState extends State<LoginPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        labelText: "Username Or Email",
+                        labelText: "Your Email",
                       ),
                     ),
                     SizedBox(height: 20),
@@ -233,6 +276,7 @@ class LoginPageState extends State<LoginPage> {
                     Container(
                       child: InkWell(
                         onTap: () {
+                          if (!validateInputs()) return;
                           signwith(txtuser!.text, txtpass!.text);
                         },
                         child: Container(
@@ -292,7 +336,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(width: 15),
                         GestureDetector(
-                          onTap: () => loginWithTwitter(),
+                          //onTap: () => loginWithTwitter(),
                           child: Container(
                             child: Image.asset(
                               'assets/twitter.png',
