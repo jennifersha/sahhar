@@ -33,7 +33,7 @@ class _EditCategoryState extends State<EditCategory> {
       if (docSnapshot.exists) {
         setState(() {
           txtcateg.text = docSnapshot['name'];
-          imageFile = docSnapshot['image'];
+          imageFile = docSnapshot['imageUrl'];
         });
       }
     });
