@@ -32,6 +32,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  bool isCart = false;
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -229,7 +230,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       ),
                       IconButton(
                         onPressed: () {
-                          // Delete from likes function
+                          deleteProduct(productDetails.id);
                         },
                         icon: Icon(
                           Icons.delete_outlined,
@@ -333,7 +334,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             ),
                             IconButton(
                               onPressed: () {
-                                // Delete from likes function
+                                deleteProduct2(productDetails.id);
                               },
                               icon: Icon(
                                 Icons.delete_outlined,
@@ -389,12 +390,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       children: [
         SizedBox(height: 15),
         Expanded(
-          child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection("users").snapshots(),
+          child: StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("users")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               }
+              var userData = snapshot.data!.data() as Map<String, dynamic>;
               return Column(
                 children: [
                   SizedBox(height: 10),
@@ -417,7 +422,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                           ),
                           SizedBox(width: 10),
                           Text(
-                            '${snapshot.data!.docs[0]['Firstname']} ${snapshot.data!.docs[0]['Lastname']}',
+                            '${userData['Firstname']} ${userData['Lastname']}',
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -431,7 +436,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   SizedBox(height: 30),
                   Container(
                     child: Text(
-                      '${snapshot.data!.docs[0]['email']}',
+                      '${userData['email']}',
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
@@ -615,6 +620,28 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 }
 
+void deleteProduct(String productId) {
+  FirebaseFirestore.instance
+      .collection('users')
+      .doc(user?.uid)
+      .collection('likes')
+      .doc(productId)
+      .delete()
+      .then((value) => print('Product deleted'))
+      .catchError((error) => print('Error deleting product: $error'));
+}
+
+void deleteProduct2(String productId) {
+  FirebaseFirestore.instance
+      .collection('users')
+      .doc(user?.uid)
+      .collection('cart')
+      .doc(productId)
+      .delete()
+      .then((value) => print('Product deleted'))
+      .catchError((error) => print('Error deleting product: $error'));
+}
+  
 /*void openWhatsApp() async {
   String phoneNumber = '+972526789152'; // replace with your phone number
   String message = 'Hello!'; // replace with your message
@@ -625,3 +652,5 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     throw 'Could not launch $url';
   }
 }*/
+
+
