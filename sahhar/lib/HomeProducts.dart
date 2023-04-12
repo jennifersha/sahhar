@@ -70,8 +70,7 @@ class HomeProductsState extends State<HomeProducts> {
             itemBuilder: (BuildContext context, int index) {
               DocumentSnapshot doc = snapshot.data!.docs[index];
               return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 6.0, vertical: 6.0),
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
