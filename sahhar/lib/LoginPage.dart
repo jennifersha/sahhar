@@ -20,6 +20,7 @@ class LoginPageState extends State<LoginPage> {
   TextEditingController? txtuser;
   TextEditingController? txtpass;
   bool didclick = false;
+  bool isAdmin = false;
 
   bool validateInputs() {
     if (txtuser!.text.isEmpty) {
@@ -58,22 +59,29 @@ class LoginPageState extends State<LoginPage> {
   Future<void> signwith(String email, String pass) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-        email: email,
-        password: pass,
-      );
-      DocumentSnapshot usr = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .get();
-      Globals.appuser.name =
-          usr['Firstname']!.toString() + ' ' + usr['Lastname']!.toString();
-      Globals.appuser.password = usr['pass']!.toString();
-      Globals.appuser.email = usr['email']!.toString();
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-      );
+      if (email == 'admin@example.com' && pass == 'admin123') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AdminDashboard()),
+        );
+      } else {
+        UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email,
+          password: pass,
+        );
+        DocumentSnapshot usr = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .get();
+        Globals.appuser.name =
+            usr['Firstname']!.toString() + ' ' + usr['Lastname']!.toString();
+        Globals.appuser.password = usr['pass']!.toString();
+        Globals.appuser.email = usr['email']!.toString();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -361,19 +369,6 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AdminDashboard()),
-                        );
-                      },
-                      child: Text(
-                        "admin",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
                   ],
                 ),
               ),
