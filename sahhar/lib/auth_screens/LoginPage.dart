@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:sahhar/globals.dart';
-import 'package:sahhar/Home.dart';
-import './SignUp.dart';
-import './AdminDashboard.dart';
-import './Resetpsw.dart';
+import 'package:sahhar/model/globals.dart';
+import 'package:sahhar/user_app/Home.dart';
+import '../admin_app/AdminDashboard.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:flutter_twitter_login/flutter_twitter_login.dart';
+
+import 'Resetpsw.dart';
+import 'SignUp.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,13 +16,17 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  TextEditingController? txtuser;
-  TextEditingController? txtpass;
+  Map<String, dynamic> loginData = {
+    'email': '',
+    'password': '',
+  };
+  // TextEditingController? txtuser;
+  // TextEditingController? txtpass;
   bool didclick = false;
   bool isAdmin = false;
 
   bool validateInputs() {
-    if (txtuser!.text.isEmpty) {
+    if (loginData['email'].isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -35,7 +38,7 @@ class LoginPageState extends State<LoginPage> {
       );
       return false;
     }
-    if (txtpass!.text.isEmpty) {
+    if (loginData['password'].isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           'Please enter your password',
@@ -48,18 +51,10 @@ class LoginPageState extends State<LoginPage> {
     return true;
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    txtuser = new TextEditingController();
-    txtpass = new TextEditingController();
-  }
-
   Future<void> signwith(String email, String pass) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
-      if (email == 'admin@example.com' && pass == 'admin123') {
+      if (email == 'admin@gmail.com' && pass == 'admin123') {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AdminDashboard()),
@@ -79,7 +74,7 @@ class LoginPageState extends State<LoginPage> {
         Globals.appuser.email = usr['email']!.toString();
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Home()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -100,7 +95,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   bool checkdata() {
-    if (txtuser!.text.isEmpty || txtpass!.text.isEmpty) {
+    if (loginData['email'].isEmpty || loginData['password'].isEmpty) {
       return false;
     }
     return true;
@@ -108,47 +103,62 @@ class LoginPageState extends State<LoginPage> {
 
 //login with google
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  GoogleSignInAccount? _user;
 
-  Future<void> loginWithGoogle() async {
+  GoogleSignInAccount? get user => _user;
+
+  Future<String?> googleLogin() async {
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        await FirebaseAuth.instance.signInWithCredential(credential);
-        // Navigate to the home screen
-      } else {
-        // Handle login failure
-      }
-    } catch (e) {
-      // Handle login failure
-    }
-  }
-
-  //login with facebook
-  Future<void> loginWithFacebook() async {
-    final LoginResult result = await FacebookAuth.instance.login();
-    if (result.status == LoginStatus.success) {
-      final AccessToken accessToken = result.accessToken!;
-      final AuthCredential credential =
-          FacebookAuthProvider.credential(accessToken.token);
+      if (googleUser == null) return 'Not user Found';
+      _user = googleUser;
+      final googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
       await FirebaseAuth.instance.signInWithCredential(credential);
-      // Navigate to the home screen
-    } else {
-      // Handle login failure
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({
+        "Firstname": user?.displayName,
+        'userId': FirebaseAuth.instance.currentUser!.uid,
+        'Lastname': '',
+        "email": user!.email,
+      });
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
     }
   }
+//login with facebook
+  /*
+  loginWithFacebook() async {
+    try {
+      final facebookLoginResult = await FacebookAuth.instance.login(
+        permissions: ['email', 'public_profile', 'user_birthday'],
+        loginBehavior: LoginBehavior.dialogOnly,
+      );
+      print('facebookLoginResult = ${facebookLoginResult.accessToken?.token}');
+      final facebookAuthCredential = FacebookAuthProvider.credential(
+          facebookLoginResult.accessToken!.token);
+      final userData = await FacebookAuth.instance.getUserData();
+      debugPrint('user email == ${userData['email']}');
+      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    } catch (error) {
+      print('error = $error');
+    }
+    return null;
+  }
+*/
 
   //login with twitter
-  /*final TwitterLogin twitterLogin = TwitterLogin(
+  /*
+  final TwitterLogin twitterLogin = TwitterLogin(
     consumerKey: '<your_consumer_key>',
     consumerSecret: '<your_consumer_secret>',
   );
-
   Future<void> loginWithTwitter() async {
     final TwitterLoginResult result = await twitterLogin.authorize();
     if (result.status == TwitterLoginStatus.loggedIn) {
@@ -161,47 +171,30 @@ class LoginPageState extends State<LoginPage> {
     } else {
       // Handle login failure
     }
-  }*/
+  }
+  */
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Back'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_outlined),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+        body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                width: double.infinity,
-                height: 60,
-                decoration: BoxDecoration(
-                    color: Globals.cls,
-                    border: Border.all(
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20))),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 18, left: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      '←  Back',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 20),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                height: 150,
-                color: Color(0xFF7E0000),
-                child: Align(
+                height: MediaQuery.of(context).size.height * 0.2,
+                color: const Color(0xFF7E0000),
+                child: const Align(
                   alignment: Alignment.bottomLeft,
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 20, left: 10),
@@ -217,7 +210,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                color: Color(0xFF7E0000),
+                color: const Color(0xFF7E0000),
                 child: Container(
                     width: double.infinity,
                     height: 20,
@@ -226,56 +219,83 @@ class LoginPageState extends State<LoginPage> {
                         border: Border.all(
                           color: Colors.white,
                         ),
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(35),
                             topRight: Radius.circular(35)))),
               ),
               Container(
                 color: Colors.white,
-                padding: EdgeInsets.all(10),
+                height: MediaQuery.of(context).size.height * 0.70,
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: <Widget>[
                     TextField(
-                      onChanged: (x) {
-                        setState(() {});
+                      onChanged: (value) {
+                        loginData['email'] = value;
                       },
-                      controller: txtuser,
+                      cursorColor: const Color(0xFF7E0000),
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.person,
                           size: 25,
+                          color: Color(0xFF7E0000),
                         ),
-                        border: OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 1.0,
+                            )),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0xFF7E0000),
+                          ),
                           borderRadius: BorderRadius.circular(20),
+                        ),
+                        labelStyle: const TextStyle(
+                          color: Color(0xFF7E0000),
                         ),
                         labelText: "Your Email",
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextField(
-                      onChanged: (x) {
-                        setState(() {});
+                      onChanged: (value) {
+                        loginData['password'] = value;
                       },
-                      controller: txtpass,
+                      cursorColor: const Color(0xFF7E0000),
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
+                        labelStyle: const TextStyle(
+                          color: Color(0xFF7E0000),
+                        ),
+                        prefixIcon: const Icon(
                           Icons.lock,
                           size: 25,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xFF7E0000),
                         ),
                         labelText: "Password",
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 1.0,
+                            )),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0xFF7E0000),
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(height: 35),
+                    const SizedBox(height: 35),
                     didclick == false
-                        ? SizedBox(
+                        ? const SizedBox(
                             height: 10,
                           )
-                        : Padding(
-                            padding: const EdgeInsets.all(8.0),
+                        : const Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                               'Invalid Username or password',
                               style: TextStyle(color: Colors.red),
@@ -285,7 +305,7 @@ class LoginPageState extends State<LoginPage> {
                       child: InkWell(
                         onTap: () {
                           if (!validateInputs()) return;
-                          signwith(txtuser!.text, txtpass!.text);
+                          signwith(loginData['email'], loginData['password']);
                         },
                         child: Container(
                           width: 170,
@@ -294,7 +314,7 @@ class LoginPageState extends State<LoginPage> {
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(25),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'LOGIN',
                               style:
@@ -304,7 +324,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     InkWell(
                       onTap: () {
                         Navigator.push(
@@ -312,17 +332,18 @@ class LoginPageState extends State<LoginPage> {
                           MaterialPageRoute(builder: (context) => Resetpsw()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Forgot Password?",
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
-                    SizedBox(height: 60),
+                    const SizedBox(height: 60),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () => loginWithFacebook(),
+                          onTap: () {},
+                          //  loginWithFacebook(),
                           child: Container(
                             child: Image.asset(
                               'assets/facebook.png',
@@ -331,9 +352,8 @@ class LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 15),
+                        const SizedBox(width: 15),
                         GestureDetector(
-                          onTap: () => loginWithGoogle(),
                           child: Container(
                             child: Image.asset(
                               'assets/google.png',
@@ -341,8 +361,21 @@ class LoginPageState extends State<LoginPage> {
                               height: 40,
                             ),
                           ),
+                          onTap: () => googleLogin().then(
+                            (value) async {
+                              if (value != null) {
+                                return;
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()),
+                                );
+                              }
+                            },
+                          ),
                         ),
-                        SizedBox(width: 15),
+                        const SizedBox(width: 15),
                         GestureDetector(
                           //onTap: () => loginWithTwitter(),
                           child: Container(
@@ -355,7 +388,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     InkWell(
                       onTap: () {
                         Navigator.push(
@@ -363,12 +396,12 @@ class LoginPageState extends State<LoginPage> {
                           MaterialPageRoute(builder: (context) => SignUp()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Don’t have account? Sign up now.",
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                   ],
                 ),
               ),
