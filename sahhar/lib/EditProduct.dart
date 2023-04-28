@@ -101,7 +101,7 @@ class EditProductState extends State<EditProduct> {
                 //SizedBox(height: 20),
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text(
+                  child: const Text(
                     'Update Product',
                     style: TextStyle(
                       fontSize: 30,
@@ -110,7 +110,7 @@ class EditProductState extends State<EditProduct> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: txtname,
                   decoration: InputDecoration(
@@ -126,7 +126,7 @@ class EditProductState extends State<EditProduct> {
                     return null;
                   },
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 TextFormField(
                   controller: txtdescri,
                   decoration: InputDecoration(

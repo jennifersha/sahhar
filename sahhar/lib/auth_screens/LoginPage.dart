@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sahhar/main.dart';
 import 'package:sahhar/model/globals.dart';
 import 'package:sahhar/user_app/Home.dart';
 import '../admin_app/AdminDashboard.dart';
@@ -74,7 +75,7 @@ class LoginPageState extends State<LoginPage> {
         Globals.appuser.email = usr['email']!.toString();
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => SahharApp()),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -369,7 +370,7 @@ class LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => HomePage()),
+                                      builder: (context) => SahharApp()),
                                 );
                               }
                             },
