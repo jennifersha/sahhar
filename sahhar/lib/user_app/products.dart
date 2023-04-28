@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:sahhar/ProductDetails.dart';
+import 'package:sahhar/user_app/ProductDetails.dart';
 
 class HomeProducts extends StatefulWidget {
   final String categoryName;
@@ -63,14 +62,22 @@ class HomeProductsState extends State<HomeProducts> {
             return Center(child: CircularProgressIndicator());
           }
           return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 1, crossAxisCount: 2),
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 300,
+              mainAxisExtent: 230,
+              childAspectRatio: 1,
+              crossAxisSpacing: 0,
+              mainAxisSpacing: 0,
+            ),
             itemCount: snapshot.data!.docs.length,
-            padding: EdgeInsets.all(12),
+            padding: EdgeInsets.zero,
             itemBuilder: (BuildContext context, int index) {
               DocumentSnapshot doc = snapshot.data!.docs[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: EdgeInsets.zero,
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -88,44 +95,39 @@ class HomeProductsState extends State<HomeProducts> {
                     );
                   },
                   child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                    margin: EdgeInsets.zero,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
                       children: [
-                        SizedBox(height: 1),
+                        const SizedBox(height: 1),
                         Container(
-                          height: 110,
-                          width: 110,
+                          padding: EdgeInsets.zero,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 2),
+                          height: MediaQuery.of(context).size.height * 0.16,
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          color: Colors.black,
                           child: Image.network(
                             doc['imageUrl'],
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                         ),
-                        SizedBox(height: 2),
-                        /*Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 24.0),
-                          child: Text(
-                            doc['name'],
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 20,
-                            ),
-                          ),
+                        const SizedBox(
+                          height: 5,
                         ),
-                      ),
-                      SizedBox(height: 2),*/
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: EdgeInsets.only(left: 24.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 2),
                             child: Text(
                               doc['description'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.blueGrey,
                                 fontWeight: FontWeight.normal,
                                 fontSize: 14,
@@ -133,51 +135,63 @@ class HomeProductsState extends State<HomeProducts> {
                             ),
                           ),
                         ),
-                        //SizedBox(height: 2),
+                        const Spacer(),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
-                                padding: EdgeInsets.only(left: 24.0),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 4),
                                 child: Text(
-                                  '${doc['price']} ₪',
-                                  style: TextStyle(
+                                  '${doc['price']}₪',
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 16,
+                                    fontSize: 20,
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 40),
-                            Expanded(
-                              child: IconButton(
-                                icon: Icon(
-                                  isFavorite
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: Color(0xFF7E0000),
-                                ),
-                                onPressed: () {
-                                  toggleFavorite();
-                                },
+                            const Spacer(),
+                            Container(
+                              height: 30,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 3),
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    child: Icon(
+                                      isFavorite
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: const Color(0xFF7E0000),
+                                    ),
+                                    onTap: () {
+                                      toggleFavorite();
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                    child: Icon(
+                                      isCart
+                                          ? Icons.shopping_cart
+                                          : Icons.shopping_cart_outlined,
+                                      color: const Color(0xFF7E0000),
+                                    ),
+                                    onTap: () {
+                                      toggleCart();
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    width: 2,
+                                  ),
+                                ],
                               ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: IconButton(
-                                icon: Icon(
-                                  isCart
-                                      ? Icons.shopping_cart
-                                      : Icons.shopping_cart_outlined,
-                                  color: Color(0xFF7E0000),
-                                ),
-                                onPressed: () {
-                                  toggleCart();
-                                },
-                              ),
-                            ),
+                            )
                           ],
                         )
                       ],
@@ -202,16 +216,18 @@ class HomeProductsState extends State<HomeProducts> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20))),
         title: Text(
           widget.categoryName,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Color(0xFF7E0000),
-        toolbarHeight: 100,
       ),
       body: Column(
         children: [
