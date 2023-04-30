@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sahhar/auth_screens/startScreen.dart';
+import 'package:sahhar/widget/startScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sahhar/user_app/Home.dart';
 import 'admin_app/AdminDashboard.dart';
