@@ -110,7 +110,7 @@ class _chooseColorState extends State<chooseColor> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Text(
-                                  'Reguler Colors',
+                                  'Regular Colors',
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: isColorTypeReguler == true
