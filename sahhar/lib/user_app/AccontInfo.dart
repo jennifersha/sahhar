@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../auth_screens/LoginPage.dart';
 
 class AccontInfo extends StatelessWidget {
@@ -128,43 +129,9 @@ class AccontInfo extends StatelessWidget {
                                 highlightColor:
                                     const Color(0xFF7E0000).withOpacity(0.7),
                                 onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0)),
-                                        title: const Text(
-                                            "We are here for helping",
-                                            style: TextStyle(
-                                                fontSize: 24,
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.bold)),
-                                        content: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              10,
-                                          child: const Text(
-                                              "If you have any proplem you can connect with us in WhatsApp in\n+972526789152"),
-                                        ),
-                                        actions: <Widget>[
-                                          InkWell(
-                                            child: const Text("OK  ",
-                                                style: TextStyle(
-                                                    fontSize: 22,
-                                                    color: Colors.green,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            onTap: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
+                                  // ignore: deprecated_member_use
+                                  launch(
+                                      'https://wa.me/+972526789152?text=Hello,%20I%20need%20help%20please');
                                 },
                                 child: const Text(
                                   'Help',
