@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'EditProduct.dart';
 
 class Products extends StatefulWidget {
@@ -9,8 +10,20 @@ class Products extends StatefulWidget {
 }
 
 class _ProductsState extends State<Products> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  TextEditingController _searchController = TextEditingController();
+  late Stream<QuerySnapshot<Map<String, dynamic>>> _productsStream;
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> _filteredProducts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _productsStream = _firestore.collection('products').snapshots();
+  }
+
   @override
   Widget build(BuildContext context) {
+    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>? _snapshot;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -22,10 +35,11 @@ class _ProductsState extends State<Products> {
           ),
         ),
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        )),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -34,17 +48,47 @@ class _ProductsState extends State<Products> {
           child: Column(
             children: [
               const SizedBox(height: 10),
-              StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection("products")
-                    .snapshots(),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    labelText: 'Search',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _filteredProducts =
+                          _snapshot!.data!.docs.where((product) {
+                        final userData = product.data();
+                        final name = userData['name'] ?? '';
+                        final query = value.toLowerCase();
+
+                        return name.toLowerCase().contains(query);
+                      }).toList();
+                    });
+                  },
+                ),
+              ),
+              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: _productsStream,
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
-                        child: CircularProgressIndicator(
-                      color: Color(0xFF7E0000),
-                    ));
+                      child: CircularProgressIndicator(
+                        color: Color(0xFF7E0000),
+                      ),
+                    );
                   }
+                  _snapshot =
+                      snapshot; // Assign the snapshot to _snapshot variable
+                  final products = _filteredProducts.isNotEmpty
+                      ? _filteredProducts
+                      : (snapshot.data!.docs
+                          as List<QueryDocumentSnapshot<Map<String, dynamic>>>);
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
@@ -56,13 +100,15 @@ class _ProductsState extends State<Products> {
                       crossAxisSpacing: 0,
                       mainAxisSpacing: 0,
                     ),
-                    itemCount: snapshot.data!.docs.length,
+                    itemCount: products.length,
                     padding: EdgeInsets.zero,
                     itemBuilder: (BuildContext context, int index) {
-                      DocumentSnapshot doc = snapshot.data!.docs[index];
+                      DocumentSnapshot doc = products[index];
                       return Container(
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 4, vertical: 2),
+                          horizontal: 4,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(15),
@@ -107,24 +153,27 @@ class _ProductsState extends State<Products> {
                                     children: [
                                       Container(
                                         margin: const EdgeInsets.symmetric(
-                                            horizontal: 4),
+                                          horizontal: 4,
+                                        ),
                                         child: InkWell(
                                           child: const Icon(Icons.edit),
                                           onTap: () {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditProduct(
-                                                        productId: doc.id,
-                                                      )),
+                                                builder: (context) =>
+                                                    EditProduct(
+                                                  productId: doc.id,
+                                                ),
+                                              ),
                                             );
                                           },
                                         ),
                                       ),
                                       Container(
                                         margin: const EdgeInsets.symmetric(
-                                            horizontal: 4),
+                                          horizontal: 4,
+                                        ),
                                         child: InkWell(
                                           child: const Icon(
                                             Icons.delete,
