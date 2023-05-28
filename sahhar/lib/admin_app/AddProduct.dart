@@ -138,9 +138,9 @@ class AddProductState extends State<AddProduct> {
                           fontWeight: FontWeight.bold,
                           fontSize: 18),
                       hint: Container(
-                        margin: const EdgeInsets.only(left: 5),
+                        margin: const EdgeInsets.only(right: 50),
                         child: const Text(
-                          'Choose catogry',
+                          'Choose category',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
