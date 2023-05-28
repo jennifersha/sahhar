@@ -8,6 +8,7 @@ import 'AddProduct.dart';
 import 'Categories.dart';
 import 'Products.dart';
 import 'orderSchedule.dart';
+import 'Users.dart';
 
 class AdminDashboard extends StatefulWidget {
   @override
@@ -102,7 +103,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 0, top: 15),
                                       child: const Text(
-                                        'Count of order packages :',
+                                        'Count of Orders:',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -128,7 +129,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 0),
                                       child: const Text(
-                                        'Cont Of Combleted order packages :',
+                                        'Count of Completed Orders:',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -174,7 +175,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 8),
                                         child: Text(
-                                          'Orders',
+                                          'Ordering',
                                           style: TextStyle(
                                               color: Colors.amber.shade500,
                                               fontWeight: FontWeight.bold,
@@ -307,7 +308,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         color: Colors.white, fontSize: 24),
                                   ),
                                   const Text(
-                                    'top here to see all products',
+                                    'top here to see all Products',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16),
@@ -398,7 +399,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             child: const Text(
-                              'Users problem',
+                              'Users Problems',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 26,
@@ -437,7 +438,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         horizontal: 4, vertical: 4),
                                     padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
-                                        color: Colors.blueGrey,
+                                        color: Colors.white,
                                         borderRadius:
                                             BorderRadius.circular(15)),
                                     child: Column(
@@ -451,7 +452,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 const Text(
                                                   'Users name : ',
                                                   style: TextStyle(
-                                                      color: Colors.white,
+                                                      color: Colors.black,
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.w300),
@@ -460,7 +461,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                   snapshot.data!.docs[index]
                                                       ['userName'],
                                                   style: const TextStyle(
-                                                      color: Colors.white,
+                                                      color: Colors.black,
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.w300),
@@ -480,7 +481,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 },
                                                 child: Icon(
                                                   Icons.cancel_outlined,
-                                                  color: Colors.white,
+                                                  color: Colors.black,
                                                 ),
                                               ),
                                             ),
@@ -491,7 +492,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             const Text(
                                               'number : ',
                                               style: TextStyle(
-                                                  color: Colors.white,
+                                                  color: Colors.black,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300),
                                             ),
@@ -500,7 +501,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                       ['userNumber'] ??
                                                   '',
                                               style: const TextStyle(
-                                                  color: Colors.white,
+                                                  color: Colors.black,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300),
                                             ),
@@ -513,7 +514,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             snapshot.data!.docs[index]
                                                 ['problem'],
                                             style: const TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontSize: 14,
                                                 overflow: TextOverflow.fade,
                                                 fontWeight: FontWeight.bold),
@@ -569,6 +570,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             buildInkDrawer(context, const Products(), 'Products'),
             buildInkDrawer(context, AddProduct(), 'Add Product'),
             buildInkDrawer(context, const OrderSchedule(), 'Orders Schedule'),
+            buildInkDrawer(context, Users(), 'Users Account'),
             Container(
               width: double.infinity,
               height: 65,
