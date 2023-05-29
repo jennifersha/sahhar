@@ -79,7 +79,7 @@ class ResetpswPageState extends State<Resetpsw> {
                   child: const Center(
                     child: Text(
                       'Reset Password',
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
                 ),
