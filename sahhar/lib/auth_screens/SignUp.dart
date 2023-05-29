@@ -47,7 +47,7 @@ class _SignUpState extends State<SignUp> {
         userData['phoneNumber'].toString().length < 9) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-          'Please enter a valid number with your WhatsApp introduction',
+          'Please enter a valid number',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Color(0xFF7E0000),
@@ -112,9 +112,9 @@ class _SignUpState extends State<SignUp> {
                 child: const Align(
                   alignment: Alignment.bottomLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 20, left: 10),
+                    padding: EdgeInsets.only(bottom: 30, left: 10),
                     child: Text(
-                      "Create\nAccont",
+                      "Create\nAccount",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 35,
@@ -353,7 +353,7 @@ class _SignUpState extends State<SignUp> {
                                       width: MediaQuery.of(context).size.width *
                                           10,
                                       child: const Text(
-                                          "Now you can back to Login with you'r acoont"),
+                                          "Now you can back to Login with your account"),
                                     ),
                                     actions: <Widget>[
                                       InkWell(
@@ -371,9 +371,38 @@ class _SignUpState extends State<SignUp> {
                                 },
                               );
                             });
-                          } catch (error) {
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == 'email-already-in-use') {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'The email address is already in use with another account',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  backgroundColor: Color(0xFF7E0000),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'An error occurred. Please try again later.',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  backgroundColor: Color(0xFF7E0000),
+                                ),
+                              );
+                            }
+                          } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(error.toString())));
+                              SnackBar(
+                                content: Text(
+                                  'An error occurred. Please try again later.',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                backgroundColor: Color(0xFF7E0000),
+                              ),
+                            );
                           }
                         },
                         child: Container(
