@@ -219,10 +219,10 @@ isCart = List.filled(index + 1, false);
                                 ),
                               ),
                               const SizedBox(
-                                height: 5,
+                                height: 0,
                               ),
                               Container(
-                                height: 30,
+                                height: 35,
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
