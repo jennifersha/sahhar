@@ -72,7 +72,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         if (element['packageStutes'] == 'Completed') {
                           completedOrer += 1;
                         }
-                        if (element['packageStutes'] == 'Ordered') {
+                        if (element['packageStutes'] == 'Ordering') {
                           orderedOrder += 1;
                         }
                         if (element['packageStutes'] == 'Working on') {
