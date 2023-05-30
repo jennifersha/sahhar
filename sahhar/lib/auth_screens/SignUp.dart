@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'LoginPage.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -353,7 +354,7 @@ class _SignUpState extends State<SignUp> {
                                       width: MediaQuery.of(context).size.width *
                                           10,
                                       child: const Text(
-                                          "Now you can back to Login with your account"),
+                                          "Now you can go back to Login with your account"),
                                     ),
                                     actions: <Widget>[
                                       InkWell(
@@ -364,6 +365,12 @@ class _SignUpState extends State<SignUp> {
                                                 fontWeight: FontWeight.bold)),
                                         onTap: () {
                                           Navigator.of(context).pop();
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  LoginPage(),
+                                            ),
+                                          );
                                         },
                                       ),
                                     ],

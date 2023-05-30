@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Users extends StatefulWidget {
   @override
@@ -13,50 +14,12 @@ class _UsersState extends State<Users> {
   late Stream<QuerySnapshot<Map<String, dynamic>>> _usersStream;
   TextEditingController _searchController = TextEditingController();
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _filteredUsers = [];
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> users = [];
 
   @override
   void initState() {
     super.initState();
     _usersStream = _firestore.collection('users').snapshots();
-  }
-
-  Future<void> _removeUserAccount(String userId, String email) async {
-    try {
-      // Remove user from the 'users' collection in Firestore
-      await _firestore.collection('users').doc(userId).delete();
-
-      // Remove user from Firebase Authentication
-      User? user = _auth.currentUser;
-      if (user != null && user.email == email) {
-        // Delete user from Firebase Authentication
-        await user.delete();
-
-        // Show a success message or perform any other actions
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('User account removed successfully'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      } else {
-        // Show an error message if the user is not found or doesn't match the email
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-                'Failed to remove user account: User not found or email mismatch'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
-    } catch (error) {
-      // Show an error message or perform any error handling
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to remove user account'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
   }
 
   @override
@@ -152,7 +115,29 @@ class _UsersState extends State<Users> {
                           trailing: IconButton(
                             icon: Icon(Icons.cancel_outlined,
                                 color: const Color(0xFF7E0000)),
-                            onPressed: () => _removeUserAccount(userId, email),
+                            onPressed: () async {
+                              final user = FirebaseAuth.instance.currentUser;
+                              try {
+                                await user!.delete();
+                              } catch (e) {
+                                print(
+                                    'Failed to delete user from Firebase Authentication: $e');
+                              }
+
+                              // Delete from Firestore Database
+                              try {
+                                await _firestore
+                                    .collection('users')
+                                    .doc(userId)
+                                    .delete();
+                                setState(() {
+                                  users.removeAt(index);
+                                });
+                              } catch (e) {
+                                print(
+                                    'Failed to delete user from Firestore Database: $e');
+                              }
+                            },
                           ),
                           tileColor: Colors.white,
                         ),

@@ -53,11 +53,7 @@ class LoginPageState extends State<LoginPage> {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       if (email == 'admin@gmail.com' && pass == 'admin123') {
-        UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email,
-          password: pass,
-        );
-        // ignore: use_build_context_synchronously
+        // Ignore authentication for admin user
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AdminDashboard()),
@@ -67,19 +63,39 @@ class LoginPageState extends State<LoginPage> {
           email: email,
           password: pass,
         );
+
+        // Check if the user account is deleted
+        if (userCredential.user == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('User account is deleted'),
+              duration: Duration(seconds: 2),
+              backgroundColor: Color(0xFF7E0000),
+            ),
+          );
+          return;
+        }
+
+        // Redirect to the appropriate screen
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SahharApp()),
         );
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+      if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Email or password is incorrect',
-              style: TextStyle(color: Colors.white),
-            ),
+          SnackBar(
+            content: Text('User account is deleted'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Color(0xFF7E0000),
+          ),
+        );
+      } else if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Email or password is incorrect'),
+            duration: Duration(seconds: 2),
             backgroundColor: Color(0xFF7E0000),
           ),
         );
@@ -129,47 +145,6 @@ class LoginPageState extends State<LoginPage> {
       return e.toString();
     }
   }
-//login with facebook
-  /*
-  loginWithFacebook() async {
-    try {
-      final facebookLoginResult = await FacebookAuth.instance.login(
-        permissions: ['email', 'public_profile', 'user_birthday'],
-        loginBehavior: LoginBehavior.dialogOnly,
-      );
-      print('facebookLoginResult = ${facebookLoginResult.accessToken?.token}');
-      final facebookAuthCredential = FacebookAuthProvider.credential(
-          facebookLoginResult.accessToken!.token);
-      final userData = await FacebookAuth.instance.getUserData();
-      debugPrint('user email == ${userData['email']}');
-      await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-    } catch (error) {
-      print('error = $error');
-    }
-    return null;
-  }
-*/
-
-  //login with twitter
-  /*
-  final TwitterLogin twitterLogin = TwitterLogin(
-    consumerKey: '<your_consumer_key>',
-    consumerSecret: '<your_consumer_secret>',
-  );
-  Future<void> loginWithTwitter() async {
-    final TwitterLoginResult result = await twitterLogin.authorize();
-    if (result.status == TwitterLoginStatus.loggedIn) {
-      final AuthCredential credential = TwitterAuthProvider.credential(
-        accessToken: result.session!.token,
-        secret: result.session!.secret,
-      );
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      // Navigate to the home screen
-    } else {
-      // Handle login failure
-    }
-  }
-  */
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +169,7 @@ class LoginPageState extends State<LoginPage> {
               child: const Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 20, left: 10),
+                  padding: EdgeInsets.only(bottom: 30, left: 10),
                   child: Text(
                     "Welcome!",
                     style: TextStyle(
@@ -296,7 +271,7 @@ class LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.all(8.0),
                           child: Text(
                             'Invalid Username or password',
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(color: Color(0xFF7E0000)),
                           ),
                         ),
                   Container(
@@ -324,7 +299,7 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 20),
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -334,7 +309,7 @@ class LoginPageState extends State<LoginPage> {
                     },
                     child: const Text(
                       "Forgot Password?",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
                   ),
                   const SizedBox(height: 60),
@@ -345,8 +320,8 @@ class LoginPageState extends State<LoginPage> {
                         child: Container(
                           child: Image.asset(
                             'assets/google.png',
-                            width: 40,
-                            height: 40,
+                            width: 45,
+                            height: 45,
                           ),
                         ),
                         onTap: () => googleLogin().then(
@@ -365,7 +340,7 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 25),
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -374,11 +349,15 @@ class LoginPageState extends State<LoginPage> {
                       );
                     },
                     child: const Text(
-                      "Don’t have account? Sign up now.",
-                      style: TextStyle(color: Colors.black),
+                      "Don’t have an account? Sign up now.",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
