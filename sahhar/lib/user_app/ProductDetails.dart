@@ -342,8 +342,9 @@ class ProductDetailsState extends State<ProductDetails> {
                                     const Text(
                                       "Your Order Color is: ",
                                       style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 20,
@@ -352,10 +353,11 @@ class ProductDetailsState extends State<ProductDetails> {
                                         _currentColorName,
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                            color: Color(0xFF7E0000),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Color(0xFF7E0000),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -430,9 +432,19 @@ class ProductDetailsState extends State<ProductDetails> {
                             const SizedBox(height: 5),
                             Container(
                               decoration: BoxDecoration(
-                                  color: Colors.grey.shade300,
-                                  borderRadius: BorderRadius.circular(15)),
-                              height: MediaQuery.of(context).size.height * 0.28,
+                                color: Colors.grey.shade300,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              height: (snapShot.data!
+                                              .data()!['woodColors']
+                                              .isEmpty &&
+                                          isColorTypeWoods) ||
+                                      (snapShot.data!
+                                              .data()!['regulerColor']
+                                              .isEmpty &&
+                                          isColorTypeReguler)
+                                  ? MediaQuery.of(context).size.height * 0.05
+                                  : MediaQuery.of(context).size.height * 0.28,
                               width: MediaQuery.of(context).size.width,
                               child: (snapShot.data!
                                               .data()!['woodColors']
@@ -446,9 +458,10 @@ class ProductDetailsState extends State<ProductDetails> {
                                       child: Text(
                                         'There is not available color',
                                         style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 26,
-                                            fontWeight: FontWeight.w300),
+                                          color: Colors.black,
+                                          fontSize: 26,
+                                          fontWeight: FontWeight.w300,
+                                        ),
                                       ),
                                     )
                                   : ListView.builder(
@@ -466,25 +479,28 @@ class ProductDetailsState extends State<ProductDetails> {
                                               MediaQuery.of(context).size.width,
                                           height: 70,
                                           margin: const EdgeInsets.only(
-                                              top: 5,
-                                              right: 2,
-                                              left: 2,
-                                              bottom: 0),
+                                            top: 5,
+                                            right: 2,
+                                            left: 2,
+                                            bottom: 0,
+                                          ),
                                           decoration: BoxDecoration(
                                             image: !isColorTypeReguler
                                                 ? DecorationImage(
                                                     image: NetworkImage(
-                                                        snapShot.data!.data()![
-                                                                'woodColors']
-                                                            [index]),
-                                                    fit: BoxFit.fill)
+                                                      snapShot.data!.data()![
+                                                          'woodColors'][index],
+                                                    ),
+                                                    fit: BoxFit.fill,
+                                                  )
                                                 : null,
                                             color: isColorTypeReguler
-                                                ? Color(int.tryParse(snapShot
-                                                    .data!
-                                                    .data()!['regulerColor']
-                                                        [index]
-                                                    .toString()) as int)
+                                                ? Color(int.tryParse(
+                                                    snapShot.data!
+                                                        .data()!['regulerColor']
+                                                            [index]
+                                                        .toString(),
+                                                  ) as int)
                                                 : null,
                                             borderRadius:
                                                 BorderRadius.circular(15),

@@ -286,9 +286,9 @@ isCart = List.filled(index + 1, false);
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(const SnackBar(
                                                       backgroundColor:
-                                                          Colors.red,
+                                                          Color(0xFF7E0000),
                                                       content: Text(
-                                                        'you cant add product to cart from here plese go to product details to add it',
+                                                        'Go to product details to add it to cart',
                                                         textAlign:
                                                             TextAlign.center,
                                                       )));

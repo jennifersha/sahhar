@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sahhar/user_app/confirm.dart';
 
 class Checkout extends StatefulWidget {
   @override
@@ -273,6 +274,10 @@ class CheckoutState extends State<Checkout> {
               RawMaterialButton(
                 onPressed: () {
                   Navigator.of(context).pop(true);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => confirm()),
+                  );
                 },
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -306,7 +311,7 @@ class CheckoutState extends State<Checkout> {
                 userInfo.data()?['Lastname'],
             'totalprice': totalPrice,
             'orderDate': dateFormat,
-            'packageStutes': 'Ordered',
+            'packageStutes': 'Ordering',
             'countOfOrders': orderCont,
           });
           await FirebaseFirestore.instance
@@ -528,7 +533,7 @@ class CheckoutState extends State<Checkout> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Total :',
+                          'Total:',
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -567,7 +572,7 @@ class CheckoutState extends State<Checkout> {
                             }
 
                             return Text(
-                              '$totalPrice ₪  ',
+                              '$totalPrice₪  ',
                               style: const TextStyle(
                                 color: Color(0xFF7E0000),
                                 fontWeight: FontWeight.bold,
@@ -593,7 +598,7 @@ class CheckoutState extends State<Checkout> {
                         },
                       ),
                       const Text(
-                        'Pay on delivery',
+                        'Pay in Shop',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

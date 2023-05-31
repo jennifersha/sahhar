@@ -24,28 +24,33 @@ void deleteCartProduct(String productId) {
       .collection('cart')
       .doc(productId)
       .delete()
-      .then((value) => print('Product deleted'))
-      .catchError((error) => print('Error deleting product: $error'));
+      .then((value) {
+    print('Product deleted');
+  }).catchError((error) => print('Error deleting product: $error'));
 }
 
 class CartPage extends StatefulWidget {
-  CartPage({super.key});
+  CartPage({Key? key}) : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
 }
 
 class _CartPageState extends State<CartPage> {
+  Future<QuerySnapshot> _getCartItems() async {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid.toString())
+        .collection('cart')
+        .get();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      child: FutureBuilder(
-        future: FirebaseFirestore.instance
-            .collection('users')
-            .doc(FirebaseAuth.instance.currentUser!.uid.toString())
-            .collection('cart')
-            .get(),
+      child: FutureBuilder<QuerySnapshot>(
+        future: _getCartItems(),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const Center(
@@ -53,9 +58,9 @@ class _CartPageState extends State<CartPage> {
                 color: Color(0xFF7E0000),
               ),
             );
-          } else if ((snapshot.data!.docs.isEmpty ||
-                  snapshot.data?.docs.length == null) &&
-              snapshot.connectionState == ConnectionState.done) {
+          } else if (snapshot.hasData &&
+              (snapshot.data!.docs.isEmpty ||
+                  snapshot.data?.docs.length == null)) {
             return SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -63,9 +68,10 @@ class _CartPageState extends State<CartPage> {
                 child: Text(
                   'Cart empty.',
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 26,
-                      fontWeight: FontWeight.w300),
+                    color: Colors.black,
+                    fontSize: 26,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
             );
@@ -76,9 +82,9 @@ class _CartPageState extends State<CartPage> {
                   color: const Color(0xFF7E0000),
                   onRefresh: () async {
                     await Future.delayed(const Duration(seconds: 3))
-                        .whenComplete(() => setState(
-                              () {},
-                            ));
+                        .whenComplete(() {
+                      setState(() {});
+                    });
                   },
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.73,
@@ -147,44 +153,13 @@ class _CartPageState extends State<CartPage> {
                                 ),
                               ),
                               const SizedBox(width: 16),
-                              FutureBuilder(
-                                  future: FirebaseFirestore.instance
-                                      .collection('users')
-                                      .doc(user!.uid)
-                                      .collection('cart')
-                                      .doc(snapshot.data!.docs[index].id)
-                                      .get(),
-                                  builder: (ctx, snapshote) {
-                                    if (snapshote.connectionState ==
-                                        ConnectionState.done) {
-                                      return IconButton(
-                                        icon: Icon(
-                                          snapshote.data!.data()?['isCart'] ==
-                                                  true
-                                              ? Icons.shopping_cart
-                                              : Icons.shopping_cart_outlined,
-                                          color: const Color(0xFF7E0000),
-                                        ),
-                                        onPressed: () async {
-                                          await FirebaseFirestore.instance
-                                              .collection('users')
-                                              .doc(user!.uid)
-                                              .collection('cart')
-                                              .doc(
-                                                  snapshot.data!.docs[index].id)
-                                              .delete();
-                                        },
-                                      );
-                                    } else {
-                                      return const Icon(
-                                        Icons.shopping_cart_outlined,
-                                        color: Color(0xFF7E0000),
-                                      );
-                                    }
-                                  }),
                               IconButton(
                                 onPressed: () {
-                                  deleteCartProduct(productDetails.id);
+                                  deleteCartProduct(
+                                      snapshot.data!.docs[index].id);
+                                  setState(() {
+                                    snapshot.data!.docs.removeAt(index);
+                                  });
                                 },
                                 icon: const Icon(
                                   Icons.delete_outlined,
@@ -217,7 +192,8 @@ class _CartPageState extends State<CartPage> {
                     },
                     fillColor: Colors.green,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     child: const Text(
                       'Checkout',
                       style: TextStyle(
