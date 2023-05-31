@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
+import '../user_app/AccontInfo.dart';
 
 class confirm extends StatelessWidget {
   @override
@@ -21,16 +22,16 @@ class confirm extends StatelessWidget {
       ),
       body: Center(
         child: Card(
-          color: Colors.grey.shade300,
+          //color: Colors.grey.shade300,
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.35,
+            height: MediaQuery.of(context).size.height * 0.40,
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Congratulations',
+                  'Congratulations !',
                   style: TextStyle(
                     fontSize: 30,
                   ),
@@ -42,7 +43,7 @@ class confirm extends StatelessWidget {
                 const SizedBox(height: 15),
                 const Center(
                   child: Text(
-                    'Your order is set. It will be delivered\nwithin 7 days. You will be notified\nonce your order arrives at the\npickup station.',
+                    'Your order is set. You will be notified\nonce your order is completed to get it from the Shop.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
@@ -73,11 +74,11 @@ class confirm extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => SahharApp()),
+                        MaterialPageRoute(builder: (context) => AccontInfo()),
                       );
                     },
                     child: const Text(
-                      'Back To Home Screen',
+                      'Go to Profile to see Order Status',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 25,
