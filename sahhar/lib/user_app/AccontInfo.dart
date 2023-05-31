@@ -147,7 +147,7 @@ class AccontInfo extends StatelessWidget {
                                 } else {
                                   return Container(
                                     height: MediaQuery.of(context).size.height *
-                                        0.16,
+                                        0.18,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 4, vertical: 2),
                                     decoration: BoxDecoration(
@@ -165,7 +165,7 @@ class AccontInfo extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              'Cont of orders : ',
+                                              'Count of Orders : ',
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 14,
@@ -201,7 +201,7 @@ class AccontInfo extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              'Your Orders States : ',
+                                              'Your Order Status : ',
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 14,
@@ -210,32 +210,43 @@ class AccontInfo extends StatelessWidget {
                                             Text(
                                               '${snapshot.data!['packageStutes']}',
                                               style: TextStyle(
-                                                  color: snapshot.data![
-                                                              'packageStutes'] !=
-                                                          'Completed'
-                                                      ? Colors.black
-                                                      : Colors.green,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500),
+                                                color: snapshot.data![
+                                                            'packageStutes'] !=
+                                                        'Completed'
+                                                    ? Colors.black
+                                                    : Colors.green,
+                                                fontSize: 15,
+                                                //fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             )
                                           ],
                                         ),
+                                        SizedBox(height: 3),
                                         Text(
-                                          'whene status been completed you can go to',
+                                          'When Order is Completed you can go to',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        Text(
-                                          'Ajiyal Street 3 beit hanina- Jerusalem',
-                                          style: TextStyle(
+                                        InkWell(
+                                          onTap: () {
+                                            launch(
+                                                'https://maps.google.com/?q=Ajial+Street+3+Beit+Hanina,+Jerusalem');
+                                          },
+                                          child: Text(
+                                            'CLICK HERE:\n Ajiyal Street 3 Beit Hanina- Jerusalem',
+                                            style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 16,
-                                              fontWeight: FontWeight.w500),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
                                         ),
                                         Text(
-                                          'to deliver your products',
+                                          'To Take your Products',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 14,

@@ -151,9 +151,9 @@ class _LikePageState extends State<LikePage> {
                                   onTap: () async {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(const SnackBar(
-                                            backgroundColor: Colors.red,
+                                            backgroundColor: Color(0xFF7E0000),
                                             content: Text(
-                                              'you cant add product to cart from here plese go to product details to add it',
+                                              'Go to product details to add it to cart',
                                               textAlign: TextAlign.center,
                                             )));
                                   },

@@ -407,8 +407,17 @@ class _OrderScheduleState extends State<OrderSchedule> {
                                                           .update({
                                                         'packageStutes':
                                                             'Completed',
-                                                      }).then((value) =>
-                                                              setState(() {}));
+                                                      }).then((value) {
+                                                        setState(() {});
+
+                                                        // Get the user's phone number from orderData
+                                                        /*String phoneNumber =
+                                                            orderData['number'];
+
+                                                        // Send the notification to the user's phone
+                                                        sendNotificationToUser(
+                                                            phoneNumber);*/
+                                                      });
                                                     },
                                                   )),
                                             ],
