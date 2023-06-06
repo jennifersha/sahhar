@@ -79,7 +79,10 @@ class LoginPageState extends State<LoginPage> {
         // Redirect to the appropriate screen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SahharApp()),
+          MaterialPageRoute(
+              builder: (context) => SahharApp(
+                    index: 0,
+                  )),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -169,7 +172,7 @@ class LoginPageState extends State<LoginPage> {
               child: const Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 30, left: 10),
+                  padding: EdgeInsets.only(bottom: 20, left: 10),
                   child: Text(
                     "Welcome!",
                     style: TextStyle(
@@ -271,7 +274,7 @@ class LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.all(8.0),
                           child: Text(
                             'Invalid Username or password',
-                            style: TextStyle(color: Color(0xFF7E0000)),
+                            style: TextStyle(color: Colors.red),
                           ),
                         ),
                   Container(
@@ -299,7 +302,7 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -309,7 +312,7 @@ class LoginPageState extends State<LoginPage> {
                     },
                     child: const Text(
                       "Forgot Password?",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 60),
@@ -320,8 +323,8 @@ class LoginPageState extends State<LoginPage> {
                         child: Container(
                           child: Image.asset(
                             'assets/google.png',
-                            width: 45,
-                            height: 45,
+                            width: 40,
+                            height: 40,
                           ),
                         ),
                         onTap: () => googleLogin().then(
@@ -332,7 +335,9 @@ class LoginPageState extends State<LoginPage> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SahharApp()),
+                                    builder: (context) => SahharApp(
+                                          index: 0,
+                                        )),
                               );
                             }
                           },
@@ -340,7 +345,7 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 30),
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -349,15 +354,11 @@ class LoginPageState extends State<LoginPage> {
                       );
                     },
                     child: const Text(
-                      "Don’t have an account? Sign up now.",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      "Don’t have account? Sign up now.",
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
