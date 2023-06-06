@@ -74,7 +74,10 @@ class confirm extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => AccontInfo()),
+                        MaterialPageRoute(
+                            builder: (context) => SahharApp(
+                                  index: 3,
+                                )),
                       );
                     },
                     child: const Text(

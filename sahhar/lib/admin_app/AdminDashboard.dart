@@ -72,7 +72,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         if (element['packageStutes'] == 'Completed') {
                           completedOrer += 1;
                         }
-                        if (element['packageStutes'] == 'Ordering') {
+                        if (element['packageStutes'] == 'Ordered') {
                           orderedOrder += 1;
                         }
                         if (element['packageStutes'] == 'Working on') {
@@ -81,10 +81,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       }
                       for (int i = 0; i <= ordersData.length; i++) {
                         if (i == ordersData.length && orderCont == 0) {
-                          for (var element in ordersData) {
-                            orderCont += int.tryParse(
-                                element['countOfOrders'].toString())!;
-                          }
+                          orderCont = snapshot.data!.docs.length;
                         }
                       }
                       return Container(
@@ -103,7 +100,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 0, top: 15),
                                       child: const Text(
-                                        'Count of Orders:',
+                                        'Count of order packages :',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -129,7 +126,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 0),
                                       child: const Text(
-                                        'Count of Completed Orders:',
+                                        'Cont Of Combleted order packages :',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -175,7 +172,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 8),
                                         child: Text(
-                                          'Ordering',
+                                          'Orders',
                                           style: TextStyle(
                                               color: Colors.amber.shade500,
                                               fontWeight: FontWeight.bold,
@@ -308,7 +305,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         color: Colors.white, fontSize: 24),
                                   ),
                                   const Text(
-                                    'top here to see all Products',
+                                    'top here to see all products',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16),
@@ -399,7 +396,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             child: const Text(
-                              'Users Problems',
+                              'Users problem',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 26,
@@ -438,7 +435,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         horizontal: 4, vertical: 4),
                                     padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: Colors.blueGrey,
                                         borderRadius:
                                             BorderRadius.circular(15)),
                                     child: Column(
@@ -452,7 +449,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 const Text(
                                                   'Users name : ',
                                                   style: TextStyle(
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.w300),
@@ -461,7 +458,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                   snapshot.data!.docs[index]
                                                       ['userName'],
                                                   style: const TextStyle(
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.w300),
@@ -481,7 +478,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                 },
                                                 child: Icon(
                                                   Icons.cancel_outlined,
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                             ),
@@ -492,7 +489,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             const Text(
                                               'number : ',
                                               style: TextStyle(
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300),
                                             ),
@@ -501,7 +498,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                       ['userNumber'] ??
                                                   '',
                                               style: const TextStyle(
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w300),
                                             ),
@@ -514,7 +511,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             snapshot.data!.docs[index]
                                                 ['problem'],
                                             style: const TextStyle(
-                                                color: Colors.black,
+                                                color: Colors.white,
                                                 fontSize: 14,
                                                 overflow: TextOverflow.fade,
                                                 fontWeight: FontWeight.bold),

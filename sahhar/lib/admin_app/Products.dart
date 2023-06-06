@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'EditProduct.dart';
 
 class Products extends StatefulWidget {
@@ -106,9 +105,7 @@ class _ProductsState extends State<Products> {
                       DocumentSnapshot doc = products[index];
                       return Container(
                         margin: const EdgeInsets.symmetric(
-                          horizontal: 4,
-                          vertical: 2,
-                        ),
+                            horizontal: 4, vertical: 2),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(15),
@@ -153,27 +150,24 @@ class _ProductsState extends State<Products> {
                                     children: [
                                       Container(
                                         margin: const EdgeInsets.symmetric(
-                                          horizontal: 4,
-                                        ),
+                                            horizontal: 4),
                                         child: InkWell(
                                           child: const Icon(Icons.edit),
                                           onTap: () {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditProduct(
-                                                  productId: doc.id,
-                                                ),
-                                              ),
+                                                  builder: (context) =>
+                                                      EditProduct(
+                                                        productId: doc.id,
+                                                      )),
                                             );
                                           },
                                         ),
                                       ),
                                       Container(
                                         margin: const EdgeInsets.symmetric(
-                                          horizontal: 4,
-                                        ),
+                                            horizontal: 4),
                                         child: InkWell(
                                           child: const Icon(
                                             Icons.delete,
