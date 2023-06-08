@@ -11,6 +11,7 @@ class Checkout extends StatefulWidget {
 
 int totalPrice = 0;
 int allTotalPrice = 0;
+int orderCount = 0;
 
 class CheckoutState extends State<Checkout> {
   bool payNow = false;
@@ -19,15 +20,6 @@ class CheckoutState extends State<Checkout> {
   final user = FirebaseAuth.instance.currentUser;
 
   Future<void> placeOrder() async {
-    // QuerySnapshot<Map<String, dynamic>> orderInfo = await FirebaseFirestore
-    //     .instance
-    //     .collection('users')
-    //     .doc(user?.uid)
-    //     .collection('cart')
-    //     .get();
-
-    // List<QueryDocumentSnapshot<Map<String, dynamic>>> ListData = orderInfo.docs;
-
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -74,7 +66,7 @@ class CheckoutState extends State<Checkout> {
                     color: Colors.black,
                   ),
                   borderRadius: BorderRadius.circular(15)),
-              child: const Text("Confirem",
+              child: const Text("Confirm",
                   style: TextStyle(
                       fontSize: 22,
                       color: Colors.green,
@@ -312,6 +304,9 @@ class CheckoutState extends State<Checkout> {
                                 allTotalPrice += price;
                               }
                             }
+                            if (orderCount == 0) {
+                              orderCount = snapshot.data!.docs.length;
+                            }
 
                             return Text(
                               '$totalPrice₪  ',
@@ -340,7 +335,7 @@ class CheckoutState extends State<Checkout> {
                         },
                       ),
                       const Text(
-                        'Pay in Shop',
+                        'Pay In shop',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -397,7 +392,6 @@ class _BuildAlratContentState extends State<BuildAlratContent> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.65,
       width: MediaQuery.of(context).size.width * 0.65,
-      // color: Colors.white,
       child: FutureBuilder(
         future: FirebaseFirestore.instance
             .collection('users')
@@ -413,7 +407,7 @@ class _BuildAlratContentState extends State<BuildAlratContent> {
                   margin: EdgeInsets.symmetric(horizontal: 5),
                   child: Center(
                       child: Text(
-                    'Now you can press Confirem',
+                    'Now you can press Confirm',
                     style: TextStyle(color: Colors.green, fontSize: 24),
                   )),
                 )
@@ -428,7 +422,12 @@ class _BuildAlratContentState extends State<BuildAlratContent> {
                           totalPrice += price;
                         }
                       }
+                      if (orderCount == 0) {
+                        orderCount = snapshot.data!.docs.length;
+                      }
                       print('total = $totalPrice');
+                      print('total = $orderCount');
+
                       return Container(
                         width: 100,
                         margin: EdgeInsets.symmetric(vertical: 5),
@@ -647,6 +646,7 @@ class _BuildAlratContentState extends State<BuildAlratContent> {
 
                                     setState(() {
                                       totalPrice = totalPrice - priceStr;
+                                      orderCount -= 1;
                                       allTotalPrice = allTotalPrice - priceStr;
                                       snapshot.data?.docs[index].reference
                                           .delete();
@@ -691,6 +691,7 @@ class _BuildAlratContentState extends State<BuildAlratContent> {
                                       'totalprice': allTotalPrice,
                                       'orderDate': dateFormat,
                                       'packageStutes': 'Ordered',
+                                      'countOfOrders': orderCount,
                                     });
                                     await FirebaseFirestore.instance
                                         .collection('order')
