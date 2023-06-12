@@ -134,7 +134,7 @@ class EditProductState extends State<EditProduct> {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: const Text(
-                        'Product Catogry is',
+                        'Product Category is',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.black,
@@ -429,8 +429,8 @@ class EditProductState extends State<EditProduct> {
                         children: [
                           Text(
                             switchValue! && switchValue != null
-                                ? 'product With\nText'
-                                : 'product Without\nText',
+                                ? 'Product With\nText'
+                                : 'Product Without\nText',
                             textAlign: TextAlign.center,
                             style: const TextStyle(fontSize: 16),
                           ),

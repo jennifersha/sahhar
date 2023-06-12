@@ -100,7 +100,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 0, top: 15),
                                       child: const Text(
-                                        'Count of order packages :',
+                                        'Count of Orders :',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -126,7 +126,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 0),
                                       child: const Text(
-                                        'Cont Of Combleted order packages :',
+                                        'Count Of Completed Orders :',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -172,7 +172,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 8),
                                         child: Text(
-                                          'Orders',
+                                          'Ordering',
                                           style: TextStyle(
                                               color: Colors.amber.shade500,
                                               fontWeight: FontWeight.bold,
@@ -305,7 +305,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         color: Colors.white, fontSize: 24),
                                   ),
                                   const Text(
-                                    'top here to see all products',
+                                    'tap here to see all Products',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16),
@@ -365,7 +365,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         color: Colors.white, fontSize: 24),
                                   ),
                                   const Text(
-                                    'top here to see all Catogries',
+                                    'tap here to see all Categories',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16),
@@ -396,7 +396,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             child: const Text(
-                              'Users problem',
+                              'Users Problems',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 26,
@@ -447,7 +447,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             Row(
                                               children: [
                                                 const Text(
-                                                  'Users name : ',
+                                                  'User Name : ',
                                                   style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 16,
@@ -487,7 +487,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         Row(
                                           children: [
                                             const Text(
-                                              'number : ',
+                                              'Number : ',
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16,
@@ -567,7 +567,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             buildInkDrawer(context, const Products(), 'Products'),
             buildInkDrawer(context, AddProduct(), 'Add Product'),
             buildInkDrawer(context, const OrderSchedule(), 'Orders Schedule'),
-            buildInkDrawer(context, Users(), 'Users Account'),
+            buildInkDrawer(context, Users(), 'Users Accounts'),
             Container(
               width: double.infinity,
               height: 65,

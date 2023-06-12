@@ -109,7 +109,7 @@ class AddProductState extends State<AddProduct> {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      'Choese Product Catogry:',
+                      'Choose Product Category:',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.black,
@@ -119,7 +119,7 @@ class AddProductState extends State<AddProduct> {
                   ),
                   Container(
                     height: 45,
-                    width: MediaQuery.of(context).size.width / 2.4,
+                    width: MediaQuery.of(context).size.width / 2.8,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: const Color(0xFF7E0000),
@@ -138,9 +138,9 @@ class AddProductState extends State<AddProduct> {
                           fontWeight: FontWeight.bold,
                           fontSize: 18),
                       hint: Container(
-                        margin: const EdgeInsets.only(right: 50),
+                        margin: const EdgeInsets.only(right: 70),
                         child: const Text(
-                          'Choose category',
+                          'Choose Category',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
@@ -245,7 +245,7 @@ class AddProductState extends State<AddProduct> {
               SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: ExpansionTile(
-                    title: const Text('Choese Size and Price'),
+                    title: const Text('Choose Size and Price'),
                     collapsedBackgroundColor:
                         const Color.fromARGB(179, 248, 220, 220),
                     shape: RoundedRectangleBorder(
@@ -465,8 +465,8 @@ class AddProductState extends State<AddProduct> {
                   children: [
                     Text(
                       switchValue
-                          ? 'product With\nText'
-                          : 'product Without\nText',
+                          ? 'Product With\nText'
+                          : 'Product Without\nText',
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 16),
                     ),

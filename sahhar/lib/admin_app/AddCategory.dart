@@ -89,7 +89,7 @@ class _AddCategoryState extends State<AddCategory> {
                                   height: 5,
                                 ),
                                 Text(
-                                  'Click Here to Add Catogry image',
+                                  'Click Here to Add Category image',
                                   style: TextStyle(fontSize: 16),
                                 )
                               ],
