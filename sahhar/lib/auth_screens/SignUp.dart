@@ -110,19 +110,30 @@ class _SignUpState extends State<SignUp> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.2,
                 color: const Color(0xFF7E0000),
-                child: const Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 30, left: 10),
-                    child: Text(
-                      "Create\nAccount",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30, left: 10),
+                      child: Text(
+                        "Create\nAccount",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20, bottom: 30),
+                      child: Image.asset(
+                        'assets/logo3.png',
+                        height: 60,
+                        width: 60,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Container(

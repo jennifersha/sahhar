@@ -36,6 +36,18 @@ class ResetpswPageState extends State<Resetpsw> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: FractionallySizedBox(
+                  widthFactor: 0.17,
+                  child: Image.asset(
+                    'assets/logo3.png',
+                    height: 60,
+                    width: 60,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: email,
                 decoration: InputDecoration(
