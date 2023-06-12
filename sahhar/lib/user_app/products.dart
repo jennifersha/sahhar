@@ -95,10 +95,10 @@ isCart = List.filled(index + 1, false);
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20))),
         title: Text(
-          widget.categoryName,
+          widget.categoryName.toString().toUpperCase(),
           style: const TextStyle(
             color: Colors.white,
-            fontSize: 30,
+            fontSize: 28,
             fontWeight: FontWeight.bold,
           ),
         ),

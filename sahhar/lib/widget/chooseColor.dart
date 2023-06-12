@@ -21,7 +21,7 @@ class _chooseColorState extends State<chooseColor> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: const Text('Choese Product Colors'),
+      title: const Text('Choose Product Colors'),
       collapsedBackgroundColor: const Color.fromARGB(179, 241, 185, 185),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       textColor: Colors.black,

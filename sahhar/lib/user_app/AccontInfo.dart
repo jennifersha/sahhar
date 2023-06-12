@@ -48,7 +48,7 @@ class AccontInfo extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                  margin: const EdgeInsets.only(top: 35),
+                                  margin: const EdgeInsets.only(top: 65),
                                   child: const Text(
                                     'Account Details',
                                     textAlign: TextAlign.center,
@@ -165,7 +165,7 @@ class AccontInfo extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              'Count of Orders : ',
+                                              'Count of orders : ',
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 14,
@@ -176,7 +176,7 @@ class AccontInfo extends StatelessWidget {
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 15,
-                                                  fontWeight: FontWeight.w500),
+                                                  fontWeight: FontWeight.w600),
                                             )
                                           ],
                                         ),
@@ -194,14 +194,14 @@ class AccontInfo extends StatelessWidget {
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 15,
-                                                  fontWeight: FontWeight.w500),
+                                                  fontWeight: FontWeight.w600),
                                             )
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Text(
-                                              'Your Order Status : ',
+                                              'Order Status : ',
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 14,
@@ -224,7 +224,7 @@ class AccontInfo extends StatelessWidget {
                                         ),
                                         SizedBox(height: 3),
                                         Text(
-                                          'When Order is Completed you can go to',
+                                          'When order is Completed you can go to',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 14,
@@ -246,7 +246,7 @@ class AccontInfo extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          'To Take your Products',
+                                          'To Take Your Products',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 14,

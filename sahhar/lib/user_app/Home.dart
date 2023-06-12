@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                     snapshot.connectionState != ConnectionState.waiting) {
                   return Center(
                     child: Text(
-                      'there is not any categories',
+                      'No Categories Yet',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 26,
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                                         0.06,
                                     child: Center(
                                       child: Text(
-                                        doc['name'],
+                                        doc['name'].toString().toUpperCase(),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           overflow: TextOverflow.fade,

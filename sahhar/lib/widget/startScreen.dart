@@ -10,7 +10,7 @@ class Start_screen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Sahhar Shop'),
+        title: const Text('SAHHAR SHOP'),
         elevation: 0,
       ),
       body: Column(

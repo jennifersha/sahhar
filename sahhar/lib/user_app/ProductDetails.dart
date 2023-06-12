@@ -38,7 +38,7 @@ class ProductDetailsState extends State<ProductDetails> {
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20))),
         title: const Text(
-          "product Details",
+          "Product Details",
           style: TextStyle(
             color: Colors.white,
             fontSize: 30.0,
@@ -113,7 +113,7 @@ class ProductDetailsState extends State<ProductDetails> {
                             Row(
                               children: [
                                 const Text(
-                                  'product Name: ',
+                                  'Product Name: ',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600),
@@ -164,7 +164,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                     FloatingActionButton(
                                         heroTag: "btn2",
                                         elevation: 0,
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: Color(0xFF7E0000),
                                         onPressed: () {
                                           setState(() {
                                             count += 1;
@@ -180,14 +180,14 @@ class ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 0.01,
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         child: const Text(
                           'Description: ',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w300),
+                              fontSize: 20, fontWeight: FontWeight.w600),
                         ),
                       ),
                       Container(
@@ -200,7 +200,7 @@ class ProductDetailsState extends State<ProductDetails> {
                           snapShot.data!.data()!['description'],
                           textAlign: TextAlign.left,
                           style: const TextStyle(
-                              fontSize: 18, color: Colors.blueGrey),
+                              fontSize: 18, color: Colors.black),
                         ),
                       ),
                       Container(
@@ -371,7 +371,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                       child: Row(
                                         children: [
                                           const Text(
-                                            'regular Colors',
+                                            'Regular Colors',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -403,7 +403,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                       child: Row(
                                         children: [
                                           const Text(
-                                            'woods Colors',
+                                            'Woods Colors',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -451,7 +451,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                                   .isEmpty &&
                                               isColorTypeReguler))
                                       ? MediaQuery.of(context).size.height *
-                                          0.05
+                                          0.04
                                       : MediaQuery.of(context).size.height *
                                           0.28,
                               width: MediaQuery.of(context).size.width,
@@ -475,10 +475,10 @@ class ProductDetailsState extends State<ProductDetails> {
                                               isColorTypeReguler))
                                       ? const Center(
                                           child: Text(
-                                            'There is not available color',
+                                            'Color Not available',
                                             style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 26,
+                                              fontSize: 22,
                                               fontWeight: FontWeight.w300,
                                             ),
                                           ),
@@ -660,7 +660,7 @@ class ProductDetailsState extends State<ProductDetails> {
                               child: snapShot.data!.data()!['size'].isEmpty
                                   ? const Center(
                                       child: Text(
-                                        'There is not available Size',
+                                        'Size Not available',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 22,
