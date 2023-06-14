@@ -17,6 +17,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class ProductDetailsState extends State<ProductDetails> {
+  //boolean
   bool isFavorite = false;
   bool isCart = false;
 

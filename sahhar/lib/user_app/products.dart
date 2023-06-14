@@ -25,62 +25,6 @@ class HomeProductsState extends State<HomeProducts> {
     categoryId = widget.categoryId;
   }
 
-  // add product to cart from products
-  /*
-  List<bool> isCart = [];
-isCart = List.filled(index + 1, false);
-   GestureDetector(
-                                          child: Icon(
-                                            isCart[index]
-                                                ? Icons.shopping_cart
-                                                : Icons.shopping_cart_outlined,
-                                            color: const Color(0xFF7E0000),
-                                          ),
-                                          onTap: () async {
-                                            final user = FirebaseAuth
-                                                .instance.currentUser;
-
-                                            final Map<String, dynamic>
-                                                productDetails = {
-                                              'name': doc['name'],
-                                              'price': doc['price'],
-                                              'size': doc['size'],
-                                              'imageUrl': doc['imageUrl'],
-                                              'colorName': '',
-                                              'colorurl': '',
-                                              'colorType': '',
-                                              'description': doc['description'],
-                                              'switchValue': doc['switchValue'],
-                                            };
-
-                                            if (!isCart[index]) {
-                                              await FirebaseFirestore.instance
-                                                  .collection('users')
-                                                  .doc(user?.uid)
-                                                  .collection('cart')
-                                                  .doc(doc.id)
-                                                  .set(productDetails);
-
-                                              isCart[index] = true;
-
-                                              print('cart from add = $isCart');
-                                            } else {
-                                              await FirebaseFirestore.instance
-                                                  .collection('users')
-                                                  .doc(user?.uid)
-                                                  .collection('cart')
-                                                  .doc(doc.id)
-                                                  .delete();
-                                              isCart[index] = false;
-
-                                              print(
-                                                  'cart from remove = $isCart');
-                                            }
-                                          },
-                                        ),
-                                       
-  */
-
   @override
   Widget build(BuildContext context) {
     if (categoryId.isEmpty) {
@@ -95,6 +39,7 @@ isCart = List.filled(index + 1, false);
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20))),
         title: Text(
+          //category name IN CAPSLOCK
           widget.categoryName.toString().toUpperCase(),
           style: const TextStyle(
             color: Colors.white,
@@ -112,29 +57,10 @@ isCart = List.filled(index + 1, false);
                 color: const Color.fromARGB(255, 226, 226, 226),
                 borderRadius: BorderRadius.circular(30),
               ),
-              /*child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    color: Colors.black,
-                    onPressed: () {},
-                  ),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search..',
-                        hintStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
-              ),*/
             ),
           ),
           Expanded(
+            //one-time result
             child: FutureBuilder(
               future: FirebaseFirestore.instance
                   .collection("categories")
@@ -151,7 +77,7 @@ isCart = List.filled(index + 1, false);
                 } else if (snapshot.data?.docs.length == 0) {
                   return const Center(
                     child: Text(
-                      'There is not product\nin this Category',
+                      'There is no products\nin this Category',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.black,
@@ -160,9 +86,13 @@ isCart = List.filled(index + 1, false);
                     ),
                   );
                 }
+                //grid view
                 return GridView.builder(
+                  //take space needed
                   shrinkWrap: true,
+                  //scroll through grid
                   physics: const BouncingScrollPhysics(),
+                  //layout of the grid
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent:
                         MediaQuery.of(context).size.height * 0.43,
@@ -171,6 +101,7 @@ isCart = List.filled(index + 1, false);
                     crossAxisSpacing: 0,
                     mainAxisSpacing: 0,
                   ),
+                  //length of the products items
                   itemCount: snapshot.data!.docs.length,
                   padding: EdgeInsets.zero,
                   itemBuilder: (BuildContext context, int index) {
@@ -178,12 +109,14 @@ isCart = List.filled(index + 1, false);
                       margin: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
                       padding: EdgeInsets.zero,
+                      //on tap on the product
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) {
+                                //go to product details
                                 return ProductDetails(
                                   categoryId: categoryId,
                                   productId: snapshot.data!.docs[index].id,

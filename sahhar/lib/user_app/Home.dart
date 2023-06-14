@@ -22,7 +22,9 @@ class _HomePageState extends State<HomePage> {
         children: [
           const SizedBox(height: 10),
           Expanded(
+            //to bring data
             child: StreamBuilder<QuerySnapshot>(
+              // data retrieved from snapshot
               stream: FirebaseFirestore.instance
                   .collection("categories")
                   .snapshots(),
@@ -44,9 +46,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                 } else {
+                  //return the categories as:
                   return GridView.builder(
+                    //take space needed
                     shrinkWrap: true,
+                    //scroll through grid
                     physics: const BouncingScrollPhysics(),
+                    //layout of the grid
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent:
                           MediaQuery.of(context).size.height * 0.43,
@@ -55,18 +61,22 @@ class _HomePageState extends State<HomePage> {
                       crossAxisSpacing: 0,
                       mainAxisSpacing: 0,
                     ),
+                    //length of the categories items(how many)
                     itemCount: snapshot.data!.docs.length,
                     padding: EdgeInsets.zero,
+                    //item builder
                     itemBuilder: (BuildContext context, int index) {
                       DocumentSnapshot doc = snapshot.data!.docs[index];
                       return Container(
                         margin: const EdgeInsets.symmetric(
                             horizontal: 4, vertical: 2),
                         child: GestureDetector(
+                          //on tap on the image/name of category
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
+                                //go to products page
                                 builder: (context) => HomeProducts(
                                   categoryName: doc['name'],
                                   categoryId: doc.id,

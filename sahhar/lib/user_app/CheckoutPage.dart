@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sahhar/user_app/confirm.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Checkout extends StatefulWidget {
   @override
@@ -19,6 +20,33 @@ class CheckoutState extends State<Checkout> {
 
   final user = FirebaseAuth.instance.currentUser;
 
+  /* void launchBitApp(String phoneNumber, double totalPrice) async {
+    String paymentDetails = "phone=$phoneNumber&amount=$totalPrice";
+    final url =
+        'https://play.google.com/store/apps/details?id=com.bnhp.payments.paymentsapp&hl=en&gl=US&details=$paymentDetails';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      // Handle if the Bit app is not installed
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Bit App Not Found'),
+            content: Text('Please install the Bit app to make the payment.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }*/
+
   Future<void> placeOrder() async {
     return showDialog(
       context: context,
@@ -30,7 +58,7 @@ class CheckoutState extends State<Checkout> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           actionsAlignment: MainAxisAlignment.spaceAround,
           actionsPadding: const EdgeInsets.symmetric(vertical: 16),
-          title: const Text("Let's reviwe your orders for last time",
+          title: const Text("Let's Reviwe Your Order For Last Time",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 24,
@@ -342,6 +370,33 @@ class CheckoutState extends State<Checkout> {
                           fontSize: 16,
                         ),
                       ),
+                      /*Checkbox(
+                        value: payNow,
+                        activeColor: const Color(0xFF7E0000),
+                        onChanged: (value) {
+                          setState(() {
+                            payNow = value ?? false;
+                            payOnDelivery = false;
+
+                            // Open Bit app with payment details when "Pay Now" is selected
+                            if (payNow) {
+                              String phoneNumber = "0526789152";
+                              double totalPriceDouble = totalPrice
+                                  .toDouble(); // Convert totalPrice to double
+                              launchBitApp(phoneNumber, totalPriceDouble);
+                            }
+                          });
+                        },
+                      ),
+                      const Text(
+                        'Pay Now',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      */
                     ],
                   ),
                 ],
@@ -448,7 +503,7 @@ class _BuildAlratContentState extends State<BuildAlratContent> {
                               child: Row(
                                 children: [
                                   const Text(
-                                    'product name : ',
+                                    'Product Name : ',
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -480,7 +535,7 @@ class _BuildAlratContentState extends State<BuildAlratContent> {
                               child: Row(
                                 children: [
                                   const Text(
-                                    'product price : ',
+                                    'Product Price : ',
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -660,7 +715,7 @@ class _BuildAlratContentState extends State<BuildAlratContent> {
                                         color: Color(0xFF7E0000),
                                       ),
                                       borderRadius: BorderRadius.circular(15)),
-                                  child: Text("Cancle",
+                                  child: Text("Cancel",
                                       style: TextStyle(
                                           fontSize: 22,
                                           color: Colors.red.shade300,
