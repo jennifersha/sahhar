@@ -11,6 +11,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  //collection
   Map userData = {
     'Firstname': '',
     'Lastname': '',
@@ -23,6 +24,7 @@ class _SignUpState extends State<SignUp> {
 
   bool didclick = false;
 
+//validation part
   bool validateInputs() {
     if (userData['Firstname'].isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -75,6 +77,7 @@ class _SignUpState extends State<SignUp> {
       ));
       return false;
     }
+    //checks if passwords are the same
     if (txtpassC.text != userData['pass']) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
@@ -331,15 +334,20 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       child: InkWell(
                         onTap: () async {
+                          //print phone to the user data map up
                           print(userData['phoneNumber']);
                           if (!validateInputs()) return;
+                          //firebase authentication
                           FirebaseAuth auth = FirebaseAuth.instance;
                           try {
+                            //function in firebase
                             await auth.createUserWithEmailAndPassword(
                                 email: userData['email'],
                                 password: userData['pass']);
+                            //save
                             await FirebaseFirestore.instance
                                 .collection("users")
+                                //to the user id
                                 .doc(auth.currentUser!.uid.toString())
                                 .set({
                               "Firstname": userData['Firstname'],
@@ -390,7 +398,9 @@ class _SignUpState extends State<SignUp> {
                               );
                             });
                           } on FirebaseAuthException catch (e) {
+                            //catch errors
                             if (e.code == 'email-already-in-use') {
+                              //already has account
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(

@@ -22,7 +22,9 @@ class ResetpswPageState extends State<Resetpsw> {
       appBar: AppBar(
         title: const Text('Reset password'),
         leading: IconButton(
+          //back icon
           icon: const Icon(Icons.arrow_back_ios_new_outlined),
+          //navigates back to the previous screen and closes the current screen
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -67,13 +69,17 @@ class ResetpswPageState extends State<Resetpsw> {
               const SizedBox(height: 20),
               InkWell(
                 onTap: () async {
+                  //if email is valid
                   if (formKey.currentState!.validate()) {
+                    //create instance from firebase package(allsows u to do auth operations)
                     FirebaseAuth auth = FirebaseAuth.instance;
+                    //firebase function
                     await auth.sendPasswordResetEmail(email: email.text);
 
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
+                        //function
                         return buildAlertDialog(email.text);
                       },
                     );
@@ -117,7 +123,7 @@ class ResetpswPageState extends State<Resetpsw> {
       content: Container(
         width: MediaQuery.of(context).size.width * 0.8,
         child: Text(
-          "We will send An email to: $email To reset your password.\n please cheack your email",
+          "We will send An email to: $email To reset your password.\n please check your email",
         ),
       ),
       actions: <Widget>[
@@ -131,6 +137,7 @@ class ResetpswPageState extends State<Resetpsw> {
             ),
           ),
           onTap: () {
+            //to navigate back the current screen
             Navigator.of(context).pop();
           },
         ),

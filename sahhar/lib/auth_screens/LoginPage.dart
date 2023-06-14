@@ -18,11 +18,11 @@ class LoginPageState extends State<LoginPage> {
     'email': '',
     'password': '',
   };
-  // TextEditingController? txtuser;
-  // TextEditingController? txtpass;
+
   bool didclick = false;
   bool isAdmin = false;
 
+//validation
   bool validateInputs() {
     if (loginData['email'].isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -51,6 +51,7 @@ class LoginPageState extends State<LoginPage> {
 
   Future<void> signwith(String email, String pass) async {
     FirebaseAuth auth = FirebaseAuth.instance;
+    //try
     try {
       if (email == 'admin@gmail.com' && pass == 'admin123') {
         // Ignore authentication for admin user
@@ -64,7 +65,7 @@ class LoginPageState extends State<LoginPage> {
           password: pass,
         );
 
-        // Check if the user account is deleted
+        // Check if the user account is deleted (from admin)
         if (userCredential.user == null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -85,7 +86,9 @@ class LoginPageState extends State<LoginPage> {
                   )),
         );
       }
-    } on FirebaseAuthException catch (e) {
+    } //catch errors
+    on FirebaseAuthException catch (e) {
+      //regarding to firebase auth
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -121,10 +124,11 @@ class LoginPageState extends State<LoginPage> {
 
   GoogleSignInAccount? get user => _user;
 
+//function to login with google
   Future<String?> googleLogin() async {
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      if (googleUser == null) return 'Not user Found';
+      if (googleUser == null) return 'No user Found';
       _user = googleUser;
       final googleAuth = await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
@@ -291,6 +295,8 @@ class LoginPageState extends State<LoginPage> {
                   Container(
                     child: InkWell(
                       onTap: () {
+                        //to insure that inputs are validate
+                        // if false returned= validate
                         if (!validateInputs()) return;
                         signwith(loginData['email'], loginData['password']);
                       },
@@ -338,9 +344,11 @@ class LoginPageState extends State<LoginPage> {
                             height: 40,
                           ),
                         ),
+                        //go to googleLogin function
                         onTap: () => googleLogin().then(
                           (value) async {
                             if (value != null) {
+                              //stop execution=exit
                               return;
                             } else {
                               Navigator.pushReplacement(
