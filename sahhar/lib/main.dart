@@ -9,6 +9,7 @@ import 'user_app/CartPage.dart';
 import 'user_app/LikePage.dart';
 
 void main() async {
+  //initializing for firebase
   WidgetsFlutterBinding.ensureInitialized();
   if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
@@ -75,7 +76,7 @@ class _SahharAppState extends State<SahharApp> {
             toolbarHeight: 60,
             elevation: 0.0,
           )),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, //hide the debug banner
       home: StreamBuilder(
           stream: FirebaseAuth.instance.userChanges(),
           builder: (context, AsyncSnapshot<User?> snapshot) {
