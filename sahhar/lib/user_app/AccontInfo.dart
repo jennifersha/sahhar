@@ -233,7 +233,7 @@ class AccontInfo extends StatelessWidget {
                                         InkWell(
                                           onTap: () {
                                             launch(
-                                                'https://maps.google.com/?q=Ajial+Street+3+Beit+Hanina,+Jerusalem');
+                                                'https://www.google.com/maps/place/Jerusalem/@31.8398941,35.2328276,18z/data=!4m6!3m5!1s0x15032a662255c6d3:0x3635b2dfbd85cfda!8m2!3d31.8398356!4d35.2328682!16s%2Fg%2F11c65cqtdr');
                                           },
                                           child: Text(
                                             'CLICK HERE:\n Ajiyal Street 3 Beit Hanina- Jerusalem',

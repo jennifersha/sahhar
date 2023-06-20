@@ -72,7 +72,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         if (element['packageStutes'] == 'Completed') {
                           completedOrer += 1;
                         }
-                        if (element['packageStutes'] == 'Ordered') {
+                        if (element['packageStutes'] == 'Ordering') {
                           orderedOrder += 1;
                         }
                         if (element['packageStutes'] == 'Working on') {
@@ -100,7 +100,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 0, top: 15),
                                       child: const Text(
-                                        'Count of Orders :',
+                                        'Count of orders :',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -126,7 +126,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 0),
                                       child: const Text(
-                                        'Count Of Completed Orders :',
+                                        'Count of completed orders :',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
