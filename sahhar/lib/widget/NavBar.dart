@@ -44,6 +44,7 @@ class _NavBarState extends State<NavBar> {
       currentIndex: _curntInedx,
       selectedItemColor: const Color(0xFF7E0000),
       unselectedItemColor: Colors.black,
+      //regarding to the index of the navigation bar bottom items go to pages
       onTap: (index) {
         if (index == 0) {
           print('from push $index');

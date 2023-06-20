@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 
+//UI for choosing product colors
 class chooseColor extends StatefulWidget {
   const chooseColor({super.key});
 
@@ -9,17 +10,21 @@ class chooseColor extends StatefulWidget {
   State<chooseColor> createState() => _chooseColorState();
 }
 
+//Lists for the color and his name
 List<String> choosesRegulerColor = [];
 List<String> choosesRegulerNameColor = [];
 List<String> choosesWoodsColor = [];
 List<String> choosesWoodsNameColor = [];
 
 class _chooseColorState extends State<chooseColor> {
+  //current color type
   bool isColorTypeReguler = true;
   bool isColorTypeWoods = false;
 
   @override
   Widget build(BuildContext context) {
+    //for the admin
+    //color selection ui design
     return ExpansionTile(
       title: const Text('Choose Product Colors'),
       collapsedBackgroundColor: const Color.fromARGB(179, 241, 185, 185),
@@ -34,6 +39,8 @@ class _chooseColorState extends State<chooseColor> {
         Container(
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.symmetric(horizontal: 4),
+          //fetches data from Firestore based on the selected color type
+          // (regular or unique) and builds the UI accordingly
           child: FutureBuilder(
               future: FirebaseFirestore.instance
                   .collection('adminData')
@@ -67,7 +74,7 @@ class _chooseColorState extends State<chooseColor> {
                       height: MediaQuery.of(context).size.height * 0.30,
                       child: const Center(
                           child: Text(
-                              'Connecting field !\nplease check your Internet')));
+                              'Connecting failed !\nplease check your Internet')));
                 } else {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,8 +172,8 @@ class _chooseColorState extends State<chooseColor> {
                         child: Marquee(
                           text: (choosesRegulerNameColor.isEmpty) &&
                                   (choosesWoodsNameColor.isEmpty)
-                              ? 'you didnt choses any color'
-                              : 'You choses from Reguler color : $choosesRegulerNameColor  And You choses from Woods color : $choosesWoodsNameColor',
+                              ? 'you didnt choose any color'
+                              : 'You choose from Reguler color : $choosesRegulerNameColor  And You choose from Woods color : $choosesWoodsNameColor',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                           scrollAxis: Axis.horizontal,
                           crossAxisAlignment: CrossAxisAlignment.start,
