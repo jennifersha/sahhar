@@ -80,8 +80,10 @@ class _SahharAppState extends State<SahharApp> {
       home: StreamBuilder(
           stream: FirebaseAuth.instance.userChanges(),
           builder: (context, AsyncSnapshot<User?> snapshot) {
+            //if the user is admin
             if (snapshot.hasData && snapshot.data!.email == 'admin@gmail.com') {
               return AdminDashboard();
+              // if the user not admin
             } else if (snapshot.hasData &&
                 snapshot.data!.email != 'admin@gmail.com') {
               return Scaffold(
