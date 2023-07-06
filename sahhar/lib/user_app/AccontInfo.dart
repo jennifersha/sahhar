@@ -190,6 +190,7 @@ class AccontInfo extends StatelessWidget {
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             Text(
+                                              //null check
                                               '${snapshot.data!['totalprice']} ₪',
                                               style: TextStyle(
                                                   color: Colors.black,

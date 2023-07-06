@@ -84,6 +84,7 @@ class ProductDetailsState extends State<ProductDetails> {
                         height: MediaQuery.of(context).size.height * 0.30,
                         margin: const EdgeInsets.only(top: 5),
                         child: ListView.builder(
+                            //scroll if more than one image
                             scrollDirection: Axis.horizontal,
                             itemCount:
                                 snapShot.data!.data()!['imageUrl'].length,
@@ -138,6 +139,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                       fontSize: 18),
                                 ),
                                 Row(
+                                  //handle - and + for the quantity
                                   children: [
                                     FloatingActionButton(
                                       heroTag: "btn1",
@@ -145,6 +147,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                       backgroundColor: Colors.grey,
                                       onPressed: () {
                                         setState(() {
+                                          //minus
                                           count -= 1;
                                         });
                                       },
@@ -168,6 +171,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                         backgroundColor: Color(0xFF7E0000),
                                         onPressed: () {
                                           setState(() {
+                                            //Plus
                                             count += 1;
                                           });
                                         },
@@ -219,6 +223,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                       fontWeight: FontWeight.w600),
                                 ),
                                 Text(
+                                  //multiply the price with the count (how much quantity)
                                   '${int.tryParse(snapShot.data!.data()!['price'][indexOfpriceSize])! * count} ₪',
                                   style: const TextStyle(
                                       fontSize: 24,
