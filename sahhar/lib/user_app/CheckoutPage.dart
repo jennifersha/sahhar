@@ -58,7 +58,7 @@ class CheckoutState extends State<Checkout> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           actionsAlignment: MainAxisAlignment.spaceAround,
           actionsPadding: const EdgeInsets.symmetric(vertical: 16),
-          title: const Text("Let's Reviwe Your Order For Last Time",
+          title: const Text("Please Review Your Order",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 24,
