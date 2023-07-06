@@ -95,6 +95,7 @@ class _EditCategoryState extends State<EditCategory> {
                 ),
               ),
               const SizedBox(height: 30),
+              //txt the name
               TextFormField(
                 onChanged: (val) {
                   txtcateg = val;
@@ -119,14 +120,19 @@ class _EditCategoryState extends State<EditCategory> {
                   autofocus: true,
                   onPressed: () async {
                     // upload the image to Firebase & Storage
+                    //pick image
                     final pickedImageFile =
                         await picker.pickImage(source: ImageSource.gallery);
+                    //if not null
                     if (pickedImageFile != null) {
                       _fileImage = XFile(pickedImageFile.path);
                       final storage = FirebaseStorage.instance
                           .ref()
+                          //Firebase Storage location where the image will be uploaded
+                          //with the date time now
                           .child('categories/${DateTime.now().toString()}');
                       await storage
+                          //put file is used to upload image
                           .putFile(File(_fileImage!.path))
                           .then((_) async {
                         String imageUrl = await storage.getDownloadURL();

@@ -130,6 +130,7 @@ class _CategoriesState extends State<Categories> {
                                             color: Color(0xFF7E0000),
                                           ),
                                           onTap: () {
+                                            //go to delete function down
                                             deleteCategory(doc.id);
                                           },
                                         ),
@@ -154,6 +155,7 @@ class _CategoriesState extends State<Categories> {
   }
 }
 
+//function for deleteCategory
 void deleteCategory(String categoryId) async {
   try {
     await FirebaseFirestore.instance

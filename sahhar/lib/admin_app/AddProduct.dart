@@ -643,7 +643,7 @@ class AddProductState extends State<AddProduct> {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text(
-                          'An Error occurred check you are enter all field and you choses a catogry',
+                          'An Error occurred check you entered all fields and you choses a category',
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 16),
                         ),

@@ -10,13 +10,17 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  //search controller
   TextEditingController _searchController = TextEditingController();
+  // Stream to listen for changes in the products collection
   late Stream<QuerySnapshot<Map<String, dynamic>>> _productsStream;
+  //filtered products List
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _filteredProducts = [];
 
   @override
   void initState() {
     super.initState();
+    //changes in products collection
     _productsStream = _firestore.collection('products').snapshots();
   }
 
@@ -58,8 +62,10 @@ class _ProductsState extends State<Products> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
+                  // on changed
                   onChanged: (value) {
                     setState(() {
+                      //filter products
                       _filteredProducts =
                           _snapshot!.data!.docs.where((product) {
                         final userData = product.data();
@@ -174,6 +180,7 @@ class _ProductsState extends State<Products> {
                                             color: Colors.red,
                                           ),
                                           onTap: () {
+                                            //go to delete function down
                                             deleteProduct(doc.id);
                                           },
                                         ),

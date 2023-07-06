@@ -191,7 +191,7 @@ class _AddCategoryState extends State<AddCategory> {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(
                           content: Text(
-                            'please put image for your catogry',
+                            'please put image for your category',
                             style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 16),
                           ),

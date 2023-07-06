@@ -299,6 +299,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         color: Colors.white, fontSize: 24),
                                   ),
                                   Text(
+                                    //count of products
                                     'You have ${snapshot.data!.docs.length} products',
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
@@ -359,6 +360,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                         color: Colors.white, fontSize: 24),
                                   ),
                                   Text(
+                                    //count of categories
                                     'You have ${snapshot.data!.docs.length} categories',
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
@@ -532,6 +534,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
           ),
         ),
       ),
+      //admin Dashboard
       drawer: Drawer(
         backgroundColor: Colors.white,
         child: Column(
@@ -576,6 +579,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 color: const Color(0xFF7E0000),
                 borderRadius: BorderRadius.circular(15),
               ),
+              //LOGOUT
               child: InkWell(
                 highlightColor: const Color(0xFF7E0000).withOpacity(0.7),
                 onTap: () async {
