@@ -1,5 +1,5 @@
 <h1>Laser Cut Shop - Mobile Application</h1>
-<img src="[C:\Users\user\OneDrive\Desktop\Grad Project\pictures\LOgo (1).png](https://scontent.ftlv20-1.fna.fbcdn.net/v/t39.30808-6/244342401_919123335665977_1079287480703363645_n.jpg?_nc_cat=104&cb=99be929b-3346023f&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=RfMO64LOdjoAX_PCwrA&_nc_ht=scontent.ftlv20-1.fna&oh=00_AfCWeJ13-pHlQ4E4CR2KIZvjkhrQli33YvzpAwmdQxBONg&oe=64B22783)" alt="Logo">
+<img src="https://github.com/jennifersha/sahhar/blob/master/LOgo%20(1).png" alt="Logo">
 
 <p>Laser Cut Shop is a mobile application developed for a laser cutting business called "Sahhar Laser". It serves as a virtual store for customers to conveniently purchase laser cutting products, while providing the business owner with organizational tools for efficient order management.</p>
 
