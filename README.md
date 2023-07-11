@@ -1,15 +1,15 @@
 <h1>Laser Cut Shop - Mobile Application</h1>
-<img src="https://github.com/jennifersha/sahhar/blob/master/LOgo%20(1).png" alt="Logo" style="width: 150px; height: 150px;">
+<img src="https://github.com/jennifersha/sahhar/blob/master/LOgo%20(1).png" alt="Logo" style="width: 300px; height: 300px;">
 
 <p>Laser Cut Shop is a mobile application developed for a laser cutting business called "Sahhar Laser". It serves as a virtual store for customers to conveniently purchase laser cutting products, while providing the business owner with organizational tools for efficient order management.</p>
 
 <h2>Tech Stack</h2>
 <p>
-  <img src="https://link_to_figma_image" alt="Figma" title="Figma">
-  <img src="https://link_to_flutter_image" alt="Flutter" title="Flutter">
-  <img src="https://link_to_dart_image" alt="Dart" title="Dart">
-  <img src="https://link_to_firebase_image" alt="Firebase" title="Firebase">
-  <img src="https://link_to_vscode_image" alt="Visual Studio Code" title="Visual Studio Code">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/figma.png" alt="Figma" title="Figma" width="120" height="120">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/flutterr.png" alt="Flutter" title="Flutter" width="120" height="120">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/dart.png" alt="Dart" title="Dart" width="120" height="120">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/firebase.png" alt="Firebase" title="Firebase" width="120" height="120">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/vs.png" alt="Visual Studio Code" title="Visual Studio Code" width="120" height="120">
 </p>
 <p>The Laser Cut Shop mobile application was designed using Figma for UI/UX design, and developed using Flutter and Dart. Firebase from Google was used for backend services. The app currently works on Android and will be extended to iOS in the future.</p>
 
@@ -35,10 +35,10 @@
 </ul>
 
 <h2>Demo: Customer Interface</h2>
-<video src="C:\Users\user\OneDrive\Desktop\Grad Project\screen recording\Screen_Recording_20230708_120714.mp4" controls></video>
+<video src="https://github.com/jennifersha/sahhar/blob/master/screen%20recording/Screen_Recording_20230708_120714.mp4" controls></video>
 
 <h2>Demo: Shop Manager Interface</h2>
-<video src="C:\Users\user\OneDrive\Desktop\Grad Project\screen recording\Screen_Recording_20230708_121938.mp4" controls></video>
+<video src="https://github.com/jennifersha/sahhar/blob/master/screen%20recording/Screen_Recording_20230708_121938.mp4" controls></video>
 
 <h2>Download APK</h2>
 <p>Download the APK file for the Laser Cut Shop mobile application:</p>
