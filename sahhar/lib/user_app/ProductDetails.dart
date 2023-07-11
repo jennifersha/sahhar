@@ -356,6 +356,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                       height: 20,
                                       width: 80,
                                       child: Text(
+                                        //name of color you choose
                                         _currentColorName,
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
@@ -385,9 +386,12 @@ class ProductDetailsState extends State<ProductDetails> {
                                             activeColor:
                                                 const Color(0xFF7E0000),
                                             value: isColorTypeReguler,
+                                            //val:new value of the checkbox(whether it is checked or unchecked)
                                             onChanged: (val) {
                                               setState(() {
+                                                //if val not null
                                                 if (val!) {
+                                                  //checkbox is checked
                                                   isColorTypeReguler = val;
                                                   isColorTypeWoods = false;
                                                 } else {
@@ -441,6 +445,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                 color: Colors.grey.shade300,
                                 borderRadius: BorderRadius.circular(15),
                               ),
+                              //if both are empty : heigh=0 : we dont want to see the container
                               height: (snapShot.data!
                                           .data()!['woodColors']
                                           .isEmpty &&
@@ -448,6 +453,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                           .data()!['regulerColor']
                                           .isEmpty)
                                   ? 0
+                                  //if one of them empty
                                   : ((snapShot.data!
                                                   .data()!['woodColors']
                                                   .isEmpty &&
@@ -456,11 +462,13 @@ class ProductDetailsState extends State<ProductDetails> {
                                                   .data()!['regulerColor']
                                                   .isEmpty &&
                                               isColorTypeReguler))
+                                      //height size for every one of them
                                       ? MediaQuery.of(context).size.height *
                                           0.04
                                       : MediaQuery.of(context).size.height *
                                           0.28,
                               width: MediaQuery.of(context).size.width,
+                              //if both empty
                               child: (snapShot.data!
                                           .data()!['woodColors']
                                           .isEmpty &&
@@ -471,6 +479,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                       height: 0,
                                       width: 0,
                                     )
+                                  //if one of them empty
                                   : ((snapShot.data!
                                                   .data()!['woodColors']
                                                   .isEmpty &&
@@ -480,6 +489,7 @@ class ProductDetailsState extends State<ProductDetails> {
                                                   .isEmpty &&
                                               isColorTypeReguler))
                                       ? const Center(
+                                          //not available
                                           child: Text(
                                             'Color Not available',
                                             style: TextStyle(
@@ -489,7 +499,11 @@ class ProductDetailsState extends State<ProductDetails> {
                                             ),
                                           ),
                                         )
+                                      //there is data:
+                                      //ui
                                       : ListView.builder(
+                                          //number of color items in the list
+                                          //selected color type
                                           itemCount: isColorTypeReguler &&
                                                   !isColorTypeWoods
                                               ? snapShot.data!
