@@ -35,7 +35,7 @@
 </ul>
 
 <h2>Demo: Customer Interface</h2>
-<video src="https://github.com/jennifersha/sahhar/blob/master/screen%20recording/Screen_Recording_20230708_120714.mp4" controls></video>
+![0](https://github.com/jennifersha/sahhar/assets/96974977/c42a4c5d-aab5-436e-958e-bbee5bd89e3c)
 
 <h2>Demo: Shop Manager Interface</h2>
 <video src="https://github.com/jennifersha/sahhar/blob/master/screen%20recording/Screen_Recording_20230708_121938.mp4" controls></video>
