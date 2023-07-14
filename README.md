@@ -50,10 +50,24 @@
 </p>
 
 <h2>Demo: Shop Manager Interface</h2>
-<video src="https://github.com/jennifersha/sahhar/blob/master/screen%20recording/Screen_Recording_20230708_121938.mp4" controls></video>
+<p>
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/A.jpg" alt="A" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/b.jpg" alt="b" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/c.jpg" alt="c" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/d.jpg" alt="d" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/e.jpg" alt="e" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/f.jpg" alt="f" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/g.jpg" alt="g" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/h.jpg" alt="h" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/i.jpg" alt="i" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/j.jpg" alt="j" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/k.jpg" alt="k" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/l.jpg" alt="l" title="Figma" width="170" height="400">
+</p>
 
 <h2>Download APK</h2>
-<p>Download the APK file for the Laser Cut Shop mobile application</p>
+<p>Download the APK file for the Laser Cut Shop mobile application:</p>
+[app-release.zip](https://github.com/jennifersha/sahhar/files/12048340/app-release.zip)
 
 <h2>Used By</h2>
 <p>This project was developed as a graduation project for the bachelor's degree in software engineering at Azrieli, Jerusalem College of Engineering (JCE).</p>
