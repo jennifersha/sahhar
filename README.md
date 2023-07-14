@@ -36,17 +36,17 @@
 
 <h2>Demo: Customer Interface</h2>
 <p>
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/1.jpg" alt="1" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/2.jpg" alt="2" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/3.jpg" alt="3" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/4.jpg" alt="4" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/5.jpg" alt="5" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/6.jpg" alt="6" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/7.jpg" alt="7" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/8.jpg" alt="8" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/9.jpg" alt="9" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/10.jpg" alt="10" title="Figma" width="250" height="400">
-  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/11.jpg" alt="11" title="Figma" width="250" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/1.jpg" alt="1" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/2.jpg" alt="2" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/3.jpg" alt="3" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/4.jpg" alt="4" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/5.jpg" alt="5" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/6.jpg" alt="6" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/7.jpg" alt="7" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/8.jpg" alt="8" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/9.jpg" alt="9" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/10.jpg" alt="10" title="Figma" width="170" height="400">
+  <img src="https://github.com/jennifersha/sahhar/blob/master/PHOTOS/11.jpg" alt="11" title="Figma" width="170" height="400">
 </p>
 
 <h2>Demo: Shop Manager Interface</h2>
