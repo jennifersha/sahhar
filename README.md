@@ -41,8 +41,7 @@
 <video src="https://github.com/jennifersha/sahhar/blob/master/screen%20recording/Screen_Recording_20230708_121938.mp4" controls></video>
 
 <h2>Download APK</h2>
-<p>Download the APK file for the Laser Cut Shop mobile application:</p>
-<p><a href="C:\sahhar\sahhar\build\app\outputs\flutter-apk\app-release.apk">Download APK</a></p>
+<p>Download the APK file for the Laser Cut Shop mobile application</p>
 
 <h2>Used By</h2>
 <p>This project was developed as a graduation project for the bachelor's degree in software engineering at Azrieli, Jerusalem College of Engineering (JCE).</p>
